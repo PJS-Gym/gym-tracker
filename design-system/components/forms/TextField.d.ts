@@ -1,11 +1,16 @@
-export interface TextFieldProps {
-  label?: string;
-  value?: string;
-  placeholder?: string;
-  /** Leading Lucide icon (e.g. "search"). */
+/**
+ * Filled single-line input with label, hint and error.
+ */
+export interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "defaultValue"> {
+  /** Required. Use hideLabel to keep it for screen readers only. */
+  label: string;
+  hideLabel?: boolean;
+  hint?: React.ReactNode;
+  /** Shows a danger ring and message, sets aria-invalid. Say what is wrong and how to fix it. */
+  error?: React.ReactNode;
   icon?: string;
-  type?: string;
-  onChange?: (v: string) => void;
-  style?: React.CSSProperties;
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
 }
-export function TextField(props: TextFieldProps): JSX.Element;
+export const TextField: React.ForwardRefExoticComponent<TextFieldProps & React.RefAttributes<HTMLInputElement>>;

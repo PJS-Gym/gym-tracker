@@ -1,5 +1,5 @@
 <!-- @dsCard group="Member app" viewport="1100x900" name="PJS Gym member app" subtitle="Home, train, workout detail, live logger, progress" -->
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>PJS Gym — Member app</title><link rel="stylesheet" href="../../styles.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>PJS Gym — Member app</title><link rel="stylesheet" href="../../styles.css">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -12,18 +12,52 @@
 <script type="text/babel" src="ActiveWorkoutScreen.jsx"></script>
 <script type="text/babel" src="ProgressScreen.jsx"></script>
 <script type="text/babel">
-const {TabBar,Toast}=window.PJSGymDesignSystem_ff31cf;
+const {TabBar,Toast,ToastRegion,ResumeBar,Sheet,Button}=window.PJSGymDesignSystem_ff31cf;
 const TABS=[{id:"home",label:"Home",icon:"house"},{id:"train",label:"Train",icon:"dumbbell"},{id:"progress",label:"Progress",icon:"chart-no-axes-column"}];
+const TAB_KEY="pjs.tab:v1",WORKOUT_KEY="pjs.activeWorkout:v1";
+const load=(k,ok)=>{try{const v=JSON.parse(localStorage.getItem(k));return ok(v)?v:null;}catch(e){return null;}};
+const save=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+let n=0;const id=()=>Date.now().toString(36)+(n++);
+const set=(w,r,pw,pr)=>({id:id(),weight:w,reps:r,done:false,previous:pw!=null?{weight:pw,reps:pr}:null});
+const PUSH_DAY=()=>({name:"Push day",startedAt:Date.now(),rest:null,exercises:[
+  {id:id(),name:"Bench Press (Barbell)",sets:[set(null,null,80,8),set(null,null,80,8),set(null,null,80,7)]},
+  {id:id(),name:"Incline Bench Press (Dumbbell)",sets:[set(null,null,28,10),set(null,null,28,9)]}]});
+const EMPTY=()=>({name:"Workout",startedAt:Date.now(),rest:null,exercises:[]});
+function fmtElapsed(ms){const m=Math.floor(ms/60000);return m<60?m+" min":Math.floor(m/60)+"h "+(m%60)+"m";}
 function App(){
-  const [tab,setTab]=React.useState(localStorage.getItem("pjs.tab")||"home");
-  const [route,setRoute]=React.useState(null);const [toast,setToast]=React.useState(null);
-  React.useEffect(()=>localStorage.setItem("pjs.tab",tab),[tab]);
-  const finish=()=>{setRoute(null);setTab("progress");setToast("Workout saved. 1 new PR");setTimeout(()=>setToast(null),2600);};
+  const [tab,setTab]=React.useState("home");
+  const [route,setRoute]=React.useState(null);
+  const [workout,setWorkout]=React.useState(null);
+  const [toast,setToast]=React.useState(null);
+  const [said,setSaid]=React.useState("");
+  const [pending,setPending]=React.useState(null);
+  const [hold,setHold]=React.useState(false); // pause the toast while it is hovered or focused
+  const announce=msg=>{setSaid("");setTimeout(()=>setSaid(msg),50);};
+  React.useEffect(()=>{const t=load(TAB_KEY,v=>TABS.some(x=>x.id===v));if(t)setTab(t);const w=load(WORKOUT_KEY,v=>v&&Array.isArray(v.exercises));if(w)setWorkout(w);},[]);
+  React.useEffect(()=>save(TAB_KEY,tab),[tab]);
+  React.useEffect(()=>save(WORKOUT_KEY,workout),[workout]);
+  React.useEffect(()=>{if(!toast||hold)return;const t=setTimeout(()=>setToast(null),toast.action?8000:4000);return ()=>clearTimeout(t);},[toast,hold]);
+  const start=make=>{if(workout){setPending(()=>make);return;}setWorkout(make());setRoute("active");};
+  const finish=()=>{const sets=workout.exercises.flatMap(e=>e.sets).filter(s=>s.done).length;setWorkout(null);setRoute(null);setToast({message:"Workout finished. "+sets+" sets logged",action:{label:"View",onAction:()=>{setTab("progress");setToast(null);}}});};
+  const discard=()=>{setWorkout(null);setRoute(null);setToast({message:"Workout discarded"});};
   let body;
-  if(route==="detail")body=<WorkoutDetailScreen onBack={()=>setRoute(null)} onStart={()=>setRoute("active")}/>;
-  else if(route==="active")body=<ActiveWorkoutScreen onClose={()=>setRoute(null)} onFinish={finish}/>;
-  else body=<>{tab==="home"&&<HomeScreen onOpenWorkout={()=>setRoute("detail")}/>}{tab==="train"&&<TrainScreen onStartRoutine={()=>setRoute("active")}/>}{tab==="progress"&&<ProgressScreen/>}<TabBar items={TABS} active={tab} onChange={setTab}/></>;
-  return <Phone theme={route==="detail"?"dark":undefined} overlay={route==="detail"}>{body}{toast&&<div style={{position:"absolute",top:60,left:0,right:0,display:"flex",justifyContent:"center",zIndex:70}}><Toast tone="success" icon="trophy" message={toast}/></div>}</Phone>;
+  if(route==="detail")body=<WorkoutDetailScreen onBack={()=>setRoute(null)} onStart={()=>start(PUSH_DAY)}/>;
+  else if(route==="active"&&workout)body=<ActiveWorkoutScreen workout={workout} onChange={fn=>setWorkout(w=>typeof fn==="function"?fn(w):fn)} onMinimize={()=>setRoute(null)} onFinish={finish} onDiscard={discard} notify={setToast} announce={announce}/>;
+  else body=<>
+    <main style={{flex:1,minHeight:0,display:"flex",flexDirection:"column"}}>{tab==="home"&&<HomeScreen onOpenWorkout={()=>setRoute("detail")}/>}{tab==="train"&&<TrainScreen onStartEmpty={()=>start(EMPTY)} onStartRoutine={()=>start(PUSH_DAY)}/>}{tab==="progress"&&<ProgressScreen/>}</main>
+    {workout&&<div style={{padding:"8px 12px 4px"}}><ResumeBar title={workout.name} detail={workout.exercises.flatMap(e=>e.sets).filter(s=>s.done).length+" of "+workout.exercises.flatMap(e=>e.sets).length+" sets · started "+fmtElapsed(Date.now()-workout.startedAt)+" ago"} onResume={()=>setRoute("active")}/></div>}
+    <TabBar items={TABS} value={tab} onValueChange={setTab}/>
+  </>;
+  return <Phone theme={route==="detail"?"dark":undefined} overlay={route==="detail"}>
+    {body}
+    <ToastRegion offset={route==="active"?100:(workout?160:100)} onMouseEnter={()=>setHold(true)} onMouseLeave={()=>setHold(false)} onFocus={()=>setHold(true)} onBlur={()=>setHold(false)}>{toast&&<Toast message={toast.message} action={toast.action&&{label:toast.action.label,onAction:()=>{toast.action.onAction();setToast(null);}}}/>}</ToastRegion>
+    <div className="pjs-vh" role="status" aria-live="polite">{said}</div>
+    <Sheet open={!!pending} onOpenChange={o=>!o&&setPending(null)} title="You have a workout in progress">
+      <p style={{margin:0,textAlign:"center",color:"var(--text-2)"}}>{workout?(()=>{const n=workout.exercises.flatMap(e=>e.sets).filter(s=>s.done).length;return n?"You logged "+n+" "+(n===1?"set":"sets")+" in "+workout.name+". Resume it, or discard those sets and start the new workout.":"Resume it, or discard it and start the new one.";})():""}</p>
+      <Button size="lg" fullWidth onClick={()=>{setPending(null);setRoute("active");}}>Resume workout</Button>
+      <Button variant="ghost" fullWidth style={{color:"var(--status-danger)"}} onClick={()=>{const m=pending;setPending(null);setWorkout(m());setRoute("active");}}>Discard and start new</Button>
+    </Sheet>
+  </Phone>;
 }
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script></body></html>

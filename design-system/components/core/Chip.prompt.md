@@ -1,4 +1,4 @@
-Filter / choice pill for horizontal scrollers (duration, muscle group, equipment).
+Filter or choice pill for horizontal scrollers (duration, muscle group, equipment). 44px tall, so it is a full touch target even inside a scroller.
 ```jsx
-<Chip selected>All</Chip><Chip icon="dumbbell">Dumbbells</Chip>
+<Chip selected={f==="All"} onClick={()=>setF("All")}>All</Chip>
 ```

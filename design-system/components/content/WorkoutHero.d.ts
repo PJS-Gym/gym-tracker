@@ -1,15 +1,17 @@
 /**
- * Full-bleed photo/video header with a legibility scrim and expanded sentence-case title.
+ * Full-bleed photo header with the screen's one display title.
  * @startingPoint section="Content" subtitle="Full-bleed workout hero" viewport="390x560"
  */
-export interface WorkoutHeroProps {
-  /** Image URL; omitted = dark placeholder gradient. */
+export interface WorkoutHeroProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
+  /** Photo URL; omitted = dark placeholder. */
   image?: string;
-  /** Small line above the title, e.g. "Thursday, June 27". */
-  eyebrow?: string;
+  alt?: string;
+  /** Small line above the title, e.g. "Thursday, June 27 · 28 min". */
+  eyebrow?: React.ReactNode;
   title: React.ReactNode;
-  height?: number;
+  /** Grows with content (zoom-safe); default 520. */
+  minHeight?: number;
+  as?: React.ElementType;
   children?: React.ReactNode;
-  style?: React.CSSProperties;
 }
-export function WorkoutHero(props: WorkoutHeroProps): JSX.Element;
+export function WorkoutHero(props: WorkoutHeroProps): React.JSX.Element;

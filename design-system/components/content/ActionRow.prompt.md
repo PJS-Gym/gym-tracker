@@ -1,4 +1,4 @@
-Row of stacked icon + short label actions under a hero. Every icon has a visible text label.
+Row of stacked icon + label actions under a hero (Save, Schedule, Download). Sets `data-surface="media"`, so it is legible over photos. Every icon has a visible label; toggles change the label and fill the glyph, never only the colour.
 ```jsx
-<ActionRow items={[{icon:"heart",label:"Save"},{icon:"calendar-days",label:"Schedule"},{icon:"send",label:"Share"},{icon:"download",label:"Download"}]} />
+<ActionRow items={[{id:"save",icon:"heart",label:saved?"Saved":"Save",pressed:saved,onClick:toggle}]}/>
 ```

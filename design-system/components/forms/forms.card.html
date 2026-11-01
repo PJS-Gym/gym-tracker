@@ -1,5 +1,5 @@
-<!-- @dsCard group="Components" viewport="700x280" name="Forms" -->
-<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<!-- @dsCard group="Components" viewport="700x380" name="Forms" subtitle="Fields, steppers, switches, checks, number cells" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PJS Gym · Form components</title><link rel="stylesheet" href="../../styles.css">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -7,11 +7,15 @@
 <style>body{padding:20px}.r{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.c{display:flex;flex-direction:column;gap:14px}</style></head><body><div id="root"></div>
 <script type="text/babel">
 const NS=window.PJSGymDesignSystem_ff31cf;
-const {TextField,Switch,Checkbox,Stepper,SegmentedControl}=NS;
-function App(){const [w,setW]=React.useState(82.5);const [r,setR]=React.useState(8);const [s,setS]=React.useState(true);const [c,setC]=React.useState(true);const [g,setG]=React.useState("Week");
-return <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
-<div className="c"><TextField icon="search" placeholder="Search exercises"/><TextField label="Routine name" value="Push Day"/><SegmentedControl options={["Week","Month","Year"]} value={g} onChange={setG}/></div>
-<div className="c"><div className="r" style={{gap:24}}><Stepper label="Weight" value={w} step={2.5} unit="kg" onChange={setW}/></div><div className="r" style={{gap:20}}><Switch checked={s} onChange={setS} label="Rest timer"/><Checkbox checked={c} onChange={setC}/><Checkbox/></div><Stepper label="Reps" value={r} onChange={setR}/></div>
+const {TextField,Switch,Checkbox,Stepper,SegmentedControl,NumberCell}=NS;
+function App(){const [rest,setRest]=React.useState(90);const [g,setG]=React.useState("week");const [w,setW]=React.useState(82.5);const [bw,setBw]=React.useState(135);
+return <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:24}}>
+<div className="c"><TextField label="Search exercises" hideLabel icon="search" placeholder="Search exercises…" type="search"/><TextField label="Routine name" defaultValue="Push day" hint="Shown on the Train tab"/><TextField label="Bodyweight" defaultValue="7O" inputMode="decimal" error="Enter a number, like 72.5"/><SegmentedControl label="Range" options={[{value:"week",label:"Week"},{value:"month",label:"Month"},{value:"year",label:"Year"}]} value={g} onValueChange={setG}/></div>
+<div className="c"><Stepper label="Rest time" value={rest} step={15} min={15} max={600} format={s=>Math.floor(s/60)+":"+String(s%60).padStart(2,"0")} onValueChange={setRest}/>
+<div className="r" style={{gap:20}}><Switch defaultChecked label="Vibrate when rest ends"/></div>
+<div className="r" style={{gap:16}}><Checkbox defaultChecked aria-label="Set 1 done"/><Checkbox aria-label="Set 2 done"/><Checkbox label="Warm-up set"/></div>
+<Stepper label="Bodyweight" value={bw} step={0.5} min={30} max={250} unit="kg" onValueChange={setBw}/>
+<div className="r" style={{gap:8,maxWidth:180}}><NumberCell label="Weight, kg" value={w} onValueChange={setW}/><NumberCell label="Reps" value={null} placeholder={8} mode="integer"/></div></div>
 </div>;}
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script></body></html>

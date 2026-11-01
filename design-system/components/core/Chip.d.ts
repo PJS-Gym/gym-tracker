@@ -1,9 +1,9 @@
-export interface ChipProps {
-  children?: React.ReactNode;
-  /** Selected chips invert to white-on-dark. */
+/**
+ * Filter or choice pill with aria-pressed.
+ */
+export interface ChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Selected chips invert to blush-on-plum and set aria-pressed. */
   selected?: boolean;
   icon?: string;
-  onClick?: () => void;
-  style?: React.CSSProperties;
 }
-export function Chip(props: ChipProps): JSX.Element;
+export const Chip: React.ForwardRefExoticComponent<ChipProps & React.RefAttributes<HTMLButtonElement>>;

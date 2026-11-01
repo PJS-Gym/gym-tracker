@@ -1,7 +1,10 @@
-export interface SwitchProps {
+/**
+ * On/off setting: native checkbox with role switch.
+ */
+export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "checked" | "defaultChecked" | "onChange"> {
   checked?: boolean;
-  onChange?: (checked: boolean) => void;
-  label?: string;
-  style?: React.CSSProperties;
+  defaultChecked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+  label?: React.ReactNode;
 }
-export function Switch(props: SwitchProps): JSX.Element;
+export const Switch: React.ForwardRefExoticComponent<SwitchProps & React.RefAttributes<HTMLInputElement>>;

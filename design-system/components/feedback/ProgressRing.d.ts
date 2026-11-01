@@ -1,11 +1,15 @@
-export interface ProgressRingProps {
-  /** 0–100. */
-  value?: number;
+/**
+ * Circular progress with the readable value inside.
+ */
+export interface ProgressRingProps extends React.HTMLAttributes<HTMLDivElement> {
+  value: number;
+  max?: number;
   size?: number;
   stroke?: number;
-  color?: string;
-  /** Centered content — usually the rest-timer numerals. */
+  label: string;
+  valueText?: string;
+  /** CSS transition for the arc; a 1s countdown should pass "stroke-dashoffset 1s linear". */
+  transition?: string;
   children?: React.ReactNode;
-  style?: React.CSSProperties;
 }
-export function ProgressRing(props: ProgressRingProps): JSX.Element;
+export function ProgressRing(props: ProgressRingProps): React.JSX.Element;

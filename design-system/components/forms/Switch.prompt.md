@@ -1,4 +1,5 @@
-On/off toggle for settings (rest timer sounds, auto-advance). Pink track when on; thumb slides, no overshoot.
+On/off toggle for settings ("Vibrate when rest ends"). Pink track when on; the thumb slides with no overshoot. Off state shows the control border.
 ```jsx
-<Switch checked label="Auto-start rest timer" onChange={setOn} />
+<Switch label="Sound when rest ends" checked={sound} onCheckedChange={setSound}/>
 ```
+Use for settings that apply immediately; use Checkbox for items in a list.

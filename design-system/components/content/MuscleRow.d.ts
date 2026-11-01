@@ -1,12 +1,13 @@
-export interface MuscleRowProps {
+/**
+ * Body-activity row on a shared label / bar / value grid.
+ */
+export interface MuscleRowProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
-  /** Share of workload, 0–100. */
-  percent?: number;
-  /** Value at full bar length. Pass the same max to every row in a set so all bars share one scale. */
+  percent: number;
+  /** The largest value in the set, so every row shares one scale. */
   max?: number;
-  /** Marks the decisive row (pink fill, semibold label). Use for one row at most. */
+  /** The row that matters: pink bar, bold label and value. */
   highlight?: boolean;
   divider?: boolean;
-  style?: React.CSSProperties;
 }
-export function MuscleRow(props: MuscleRowProps): JSX.Element;
+export function MuscleRow(props: MuscleRowProps): React.JSX.Element;

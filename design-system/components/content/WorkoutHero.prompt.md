@@ -1,4 +1,4 @@
-Full-bleed hero for a workout/class: photo under a bottom scrim, date eyebrow, sentence-case expanded title. The scrim exists for legibility, not decoration.
+Full-bleed hero for a workout or class: photo, bottom scrim, date line, Archivo Expanded title (the screen's one display statement). Content uses the on-media palette and sits where the scrim is at least .60 opaque.
 ```jsx
-<WorkoutHero image={url} eyebrow="Thursday, June 27" title={<>Mobility<br/>and core</>} />
+<WorkoutHero eyebrow="Thursday, June 27 · 28 min" title={<>Mobility<br/>and core</>}><ActionRow items={…}/></WorkoutHero>
 ```

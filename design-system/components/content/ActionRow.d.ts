@@ -1,6 +1,6 @@
-export interface ActionRowProps {
-  /** 3–4 actions with short sentence-case labels (Save, Schedule, Share, Download). */
-  items: { icon: string; label: string; active?: boolean; onClick?: () => void }[];
-  style?: React.CSSProperties;
-}
-export function ActionRow(props: ActionRowProps): JSX.Element;
+/**
+ * Labelled icon actions under a hero.
+ */
+export interface ActionRowItem { id?: string; icon: string; label: string; onClick?: () => void; /** Toggle state; also change the label (Save → Saved). */ pressed?: boolean }
+export interface ActionRowProps extends React.HTMLAttributes<HTMLDivElement> { items: ActionRowItem[] }
+export function ActionRow(props: ActionRowProps): React.JSX.Element;

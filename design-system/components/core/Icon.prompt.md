@@ -1,5 +1,5 @@
-Renders a Lucide outline icon (2px stroke) tinted with currentColor; use only where an established glyph makes an action faster to recognize; never as decoration or in colored tiles.
+Lucide outline icon (lucide-static 0.469.0), inlined as SVG so it needs no network and stays visible in forced-colors mode. Always decorative (`aria-hidden`); the control around it carries the name.
 ```jsx
-<Icon name="dumbbell" size={24} color="var(--accent)" />
+<Icon name="dumbbell" size={24}/>
 ```
-Names are Lucide kebab-case. Common: dumbbell, play, plus, search, clipboard-list, folder-plus, ellipsis, chevron-left, x, settings, heart, calendar-days, send, download, timer, flame, trophy, house, user.
+Use only where an established glyph speeds recognition (play, back, close, more, add). Never in coloured tiles, never on metrics. To add an icon, copy the inner markup of `icons/<name>.svg` into the registry in Icon.jsx.
