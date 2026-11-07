@@ -4,13 +4,16 @@ Manages `PJS-Gym/gym-tracker` settings and the `main` branch ruleset.
 
 ## Usage
 
+From the repo root:
+
 ```bash
-cd infra/github
 export GITHUB_TOKEN=$(gh auth token)   # needs repo admin rights
-terraform init
-terraform plan
-terraform apply
+bun tf init
+bun tf plan
+bun tf apply
 ```
+
+`bun tf <args>` runs `terraform -chdir=infra/github <args>`, so any Terraform subcommand works.
 
 ## What it enforces
 

@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "tf": "terraform -chdir=infra/github"
+  },
   "dependencies": {
     "@neon/config": "^1.9.3",
     "@neon/env": "^1.6.4"
