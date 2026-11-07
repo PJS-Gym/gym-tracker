@@ -17,6 +17,10 @@ resource "neon_project" "this" {
     role_name     = "neondb_owner"
   }
 
+  # Pinned so a provider upgrade can't change them through new defaults.
+  store_password           = "yes"
+  default_branch_protected = false
+
   # Default compute for every branch.
   autoscaling_limit_min_cu = 0.25
   autoscaling_limit_max_cu = 2
