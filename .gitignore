@@ -3,3 +3,6 @@
 .vercel
 .neon
 node_modules/
+
+.devenv
+.idea
