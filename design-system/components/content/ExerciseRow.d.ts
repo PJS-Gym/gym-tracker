@@ -1,13 +1,16 @@
-export interface ExerciseRowProps {
+/**
+ * Exercise row: thumbnail, name, sets or duration.
+ */
+export interface ExerciseRowProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
-  /** e.g. "3 × 10 · 60s rest" or "1m". */
-  meta?: string;
+  meta?: React.ReactNode;
   image?: string;
-  /** Highlights the row currently being performed. */
-  active?: boolean;
+  /** Makes the row a button. */
   onClick?: () => void;
-  /** Pass null to hide the ellipsis. */
-  onMenu?: (() => void) | null;
-  style?: React.CSSProperties;
+  /** Picker mode: the row toggles (aria-pressed) and shows a round check. */
+  selectable?: boolean;
+  selected?: boolean;
+  /** Adds an "Options for {name}" button. */
+  onMenu?: () => void;
 }
-export function ExerciseRow(props: ExerciseRowProps): JSX.Element;
+export function ExerciseRow(props: ExerciseRowProps): React.JSX.Element;

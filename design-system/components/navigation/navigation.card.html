@@ -1,5 +1,5 @@
-<!-- @dsCard group="Components" viewport="700x300" name="Navigation" -->
-<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<!-- @dsCard group="Components" viewport="700x340" name="Navigation" subtitle="Top bar, tabs, resume bar, tab bar" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PJS Gym · Navigation components</title><link rel="stylesheet" href="../../styles.css">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -7,13 +7,14 @@
 <style>body{padding:20px}.r{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.c{display:flex;flex-direction:column;gap:14px}</style></head><body><div id="root"></div>
 <script type="text/babel">
 const NS=window.PJSGymDesignSystem_ff31cf;
-const {TabBar,TopBar,Tabs}=NS;
-function App(){const [a,setA]=React.useState("train");const [t,setT]=React.useState("Workout Plan");
-const items=[{id:"home",label:"Home",icon:"house"},{id:"train",label:"Train",icon:"dumbbell"},{id:"progress",label:"Progress",icon:"chart-no-axes-column"},{id:"you",label:"You",icon:"user"}];
+const {TabBar,TopBar,Tabs,ResumeBar,Button}=NS;
+function App(){const [a,setA]=React.useState("train");
+const items=[{id:"home",label:"Home",icon:"house"},{id:"train",label:"Train",icon:"dumbbell"},{id:"progress",label:"Progress",icon:"chart-no-axes-column"}];
 return <div className="c" style={{maxWidth:420}}>
-<TopBar title="Workout details" leading="chevron-left" trailing="ellipsis" divider/>
-<Tabs items={["Overview","Equipment","Workout Plan","Body Activity"]} active={t} onChange={setT}/>
-<TabBar items={items} active={a} onChange={setA}/>
+<TopBar divider leading={<TopBar.Action icon="chevron-left" label="Back"/>} trailing={<TopBar.Action icon="ellipsis" label="Workout options"/>}>Workout details</TopBar>
+<Tabs defaultValue="plan"><Tabs.List aria-label="Workout sections"><Tabs.Tab value="overview">Overview</Tabs.Tab><Tabs.Tab value="plan">Workout plan</Tabs.Tab><Tabs.Tab value="body">Body activity</Tabs.Tab><Tabs.Tab value="kit">Equipment</Tabs.Tab></Tabs.List>{["overview","plan","body","kit"].map(v=><Tabs.Panel key={v} value={v}/>)}</Tabs>
+<ResumeBar title="Push day" detail="3 of 5 sets · started 28 min ago"/>
+<TabBar items={items} value={a} onValueChange={setA}/>
 </div>;}
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script></body></html>

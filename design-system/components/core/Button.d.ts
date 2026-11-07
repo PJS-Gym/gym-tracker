@@ -1,20 +1,17 @@
 /**
- * Primary action control. Pink pill for the main CTA, inverse/tonal for the rest.
+ * Pill action button. `primary` (pink, ink label) is the one main action on a screen.
  * @startingPoint section="Core" subtitle="Pill buttons: pink, inverse, tonal, outline" viewport="700x260"
  */
-export interface ButtonProps {
-  children?: React.ReactNode;
-  /** primary = pink, ink label (one per screen); secondary = plum inverse pill; tonal = raised surface; outline; ghost = text only; danger. */
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** primary = pink with ink label (one per screen); secondary = plum inverse; tonal = raised fill; outline; ghost = text only (deep rose); danger = flare. */
   variant?: "primary" | "secondary" | "tonal" | "outline" | "ghost" | "danger";
+  /** sm 40 (hit area expanded to 44), md 48, lg 60. */
   size?: "sm" | "md" | "lg";
-  /** Leading Lucide icon name. */
+  /** Leading icon name (see Icon.names). */
   icon?: string;
   iconRight?: string;
   fullWidth?: boolean;
-  /** pill (default) or rounded (14px) — rounded is for quick-start tiles inside lists. */
-  shape?: "pill" | "rounded";
-  disabled?: boolean;
-  onClick?: () => void;
-  style?: React.CSSProperties;
+  /** Defaults to "button"; pass "submit" inside forms. */
+  type?: "button" | "submit" | "reset";
 }
-export function Button(props: ButtonProps): JSX.Element;
+export const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>>;

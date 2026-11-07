@@ -1,5 +1,5 @@
-<!-- @dsCard group="Components" viewport="700x640" name="Content" -->
-<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<!-- @dsCard group="Components" viewport="760x700" name="Content" subtitle="Hero, cards, rows, set logger, stats, charts" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PJS Gym · Content components</title><link rel="stylesheet" href="../../styles.css">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -7,18 +7,24 @@
 <style>body{padding:20px}.r{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.c{display:flex;flex-direction:column;gap:14px}</style></head><body><div id="root"></div>
 <script type="text/babel">
 const NS=window.PJSGymDesignSystem_ff31cf;
-const {WorkoutHero,RoutineCard,ExerciseRow,SetRow,StatTile,MuscleRow,ActionTile,SectionHeader,ActionRow}=NS;
-function App(){const [d,setD]=React.useState([true,false]);
-return <div style={{display:"grid",gridTemplateColumns:"260px 1fr",gap:20}}>
-<div style={{borderRadius:28,overflow:"hidden"}}><WorkoutHero height={420} eyebrow="Thursday, June 27" title={<>Mobility<br/>and core</>}><ActionRow style={{width:"100%",marginTop:12}} items={[{icon:"heart",label:"Save"},{icon:"calendar-days",label:"Schedule"},{icon:"send",label:"Share"}]}/></WorkoutHero></div>
-<div className="c" style={{gap:10}}>
-<SectionHeader title="Routines" actionIcon="folder-plus"/>
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}><ActionTile icon="clipboard-list" label="New routine"/><ActionTile icon="plus" label="Add routine" dashed/></div>
-<RoutineCard title="Push Day" exercises={["Bench Press (Barbell)","Incline Bench Press (Dumbbell)","Shoulder Press (Dumbbell)","Lateral Raise"]} meta="6 exercises · 55 min"/>
-<ExerciseRow name="Cat Cow" meta="1m"/>
-<SetRow header/><SetRow index={1} previous="80kg × 8" weight={82.5} reps={8} done={d[0]} onToggle={v=>setD([v,d[1]])}/><SetRow index={2} previous="80kg × 8" weight={82.5} reps={8} done={d[1]} onToggle={v=>setD([d[0],v])}/>
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}><StatTile label="Volume" value="12,480" unit="kg" delta="Up 8% on last week"/><StatTile label="Time" value="52" unit="min"/></div>
-<div><MuscleRow name="Glutes" percent={14} max={14} highlight/><MuscleRow name="Core" percent={10} max={14}/></div>
+const {WorkoutHero,RoutineCard,ExerciseRow,SetTable,StatTile,MuscleRow,ActionTile,SectionHeader,ActionRow,MediaCard,ListRow,BarChart,CollapsibleSection,IconButton,Button}=NS;
+function App(){const [sets,setSets]=React.useState([{weight:82.5,reps:8,done:true},{weight:null,reps:null,done:false},{weight:null,reps:null,done:false}]);const [saved,setSaved]=React.useState(false);
+const up=(i,p)=>setSets(s=>s.map((x,j)=>j===i?{...x,...p}:x));
+return <div style={{display:"grid",gridTemplateColumns:"280px 1fr",gap:24}}>
+<div className="c">
+<div style={{borderRadius:28,overflow:"hidden"}}><WorkoutHero minHeight={400} eyebrow="Thursday, June 27 · 28 min" title={<>Mobility<br/>and core</>}><ActionRow style={{width:"100%",marginTop:12}} items={[{id:"s",icon:"heart",label:saved?"Saved":"Save",pressed:saved,onClick:()=>setSaved(!saved)},{id:"c",icon:"calendar-days",label:"Schedule"},{id:"d",icon:"download",label:"Download"}]}/></WorkoutHero></div>
+<MediaCard title="Power hour" meta="6:30 pm · Studio 2" style={{width:"100%"}}/>
+<div><ListRow icon="arrow-up" label="Move up"/><ListRow icon="timer" label="Rest timer" detail="1:30"/><ListRow icon="trash-2" label="Remove exercise" destructive/></div>
+</div>
+<div className="c" style={{gap:12,minWidth:0}}>
+<SectionHeader title="Routines" trailing={<IconButton icon="folder-plus" label="New folder"/>}/>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}><ActionTile icon="clipboard-list" label="New routine"/><ActionTile icon="plus" label="New routine" dashed/></div>
+<CollapsibleSection title="My routines" count={1}><RoutineCard title="Push day" exercises={["Bench Press (Barbell)","Incline Bench Press (Dumbbell)","Shoulder Press (Dumbbell)","Lateral Raise (Cable)"]} meta="5 exercises · 55 min" onMenu={()=>{}}/></CollapsibleSection>
+<ExerciseRow name="Cat Cow" meta="1m" onMenu={()=>{}}/>
+<SetTable label="Bench Press (Barbell)" unit="kg"><SetTable.Header/>{sets.map((s,i)=><SetTable.Row key={i} index={i+1} previous={{weight:80,reps:i===2?7:8}} weight={s.weight} reps={s.reps} done={s.done} onValueChange={v=>up(i,v)} onDoneChange={v=>up(i,{done:v})}/>)}</SetTable>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}><StatTile label="Volume" value="12,480" unit="kg" detail="Up 8% on last week"/><StatTile label="Time" value="52" unit="min"/></div>
+<div><MuscleRow name="Glutes" percent={14} max={14} highlight/><MuscleRow name="Core" percent={10} max={14}/><MuscleRow name="Quads" percent={9} max={14}/></div>
+<BarChart unit="kg" bars={[["M",2400],["T",0],["W",4320],["T",3300],["F",0],["S",5280],["S",1800]].map(([label,value])=>({label,value}))} caption="Volume peaked on Saturday. Bars start at zero." format={v=>v.toLocaleString("en-US")}/>
 </div></div>;}
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script></body></html>

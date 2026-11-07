@@ -1,16 +1,11 @@
-export interface SectionHeaderProps {
+/**
+ * Section title with one optional trailing action.
+ */
+export interface SectionHeaderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
   title: React.ReactNode;
-  /** Text action at right (e.g. "See all"). */
-  action?: string;
-  /** Icon action at right (e.g. "folder-plus"). */
-  actionIcon?: string;
-  onAction?: () => void;
-  /** Adds a disclosure chevron. */
-  collapsible?: boolean;
-  open?: boolean;
-  onToggle?: () => void;
-  /** Smaller grey folder-style title. */
-  muted?: boolean;
-  style?: React.CSSProperties;
+  /** Heading element; default "h2". */
+  as?: React.ElementType;
+  /** One action: <Button variant="ghost" size="sm">, a labelled IconButton, or plain meta text. */
+  trailing?: React.ReactNode;
 }
-export function SectionHeader(props: SectionHeaderProps): JSX.Element;
+export function SectionHeader(props: SectionHeaderProps): React.JSX.Element;

@@ -1,0 +1,65 @@
+/* Interaction states that inline styles cannot express. Components add these classes; they never set
+   transform, scale, filter or outline inline on the same element. */
+
+/* Visually hidden, still announced */
+.pjs-vh{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* State layer for anything tappable: hover (pointer devices only) and press darken or lighten with currentColor. */
+.pjs-i{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;
+  transition:scale var(--dur-fast) var(--ease-standard),background-color var(--dur-base) var(--ease-standard),color var(--dur-base) var(--ease-standard),box-shadow var(--dur-base) var(--ease-standard)}
+.pjs-i::before{content:"";position:absolute;inset:0;border-radius:inherit;background:currentColor;opacity:0;z-index:-1;pointer-events:none;transition:opacity var(--dur-fast)}
+@media (hover:hover) and (pointer:fine){.pjs-i:not(:disabled,[aria-disabled="true"]):hover::before{opacity:.08}}
+.pjs-i:not(:disabled,[aria-disabled="true"]):active::before{opacity:.12}
+.pjs-i:disabled,.pjs-i[aria-disabled="true"]{cursor:default}
+
+/* Press scale: buttons, icon buttons and chips only. Rows, cards and inputs do not move. */
+.pjs-press:not(:disabled,[aria-disabled="true"]):active{scale:var(--press-scale)}
+.pjs-press--icon:not(:disabled,[aria-disabled="true"]):active{scale:var(--press-scale-icon)}
+
+/* Expand a small control's hit area to 44px without changing its look. Not for use inside scroll containers. */
+.pjs-hit::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,var(--tap-min));height:max(100%,var(--tap-min));translate:-50% -50%}
+
+/* Native checkbox / switch / radio drawn as a custom box. The input sits before the box so focus can reach it. */
+.pjs-check{position:relative;display:inline-flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pjs-check>input{position:absolute;left:0;top:50%;width:var(--hit,44px);height:var(--hit,44px);margin:0;translate:calc((var(--box,32px) - var(--hit,44px))/2) -50%;opacity:0;cursor:pointer;z-index:1}
+.pjs-check>input:focus-visible+.pjs-check__box{outline:2px solid var(--focus);outline-offset:2px}
+.pjs-check>input:disabled{cursor:default}
+.pjs-check__box{flex:none;box-sizing:border-box}
+
+/* Text fields and logger cells: ONE ring. The edge itself turns into the focus ring (2px deep rose) and the fill
+   lightens; no second outline outside it. Invalid fields keep a 2px danger edge. */
+.pjs-field__box{box-shadow:inset 0 0 0 1.5px var(--border-control);transition:box-shadow var(--dur-fast) var(--ease-standard),background-color var(--dur-fast) var(--ease-standard)}
+.pjs-field__box:focus-within{box-shadow:inset 0 0 0 2px var(--focus);background:var(--surface-card)!important}
+.pjs-field__box:has(input[aria-invalid="true"]){box-shadow:inset 0 0 0 2px var(--status-danger)}
+.pjs-field__box input:focus,.pjs-field__box input:focus-visible{outline:none}
+.pjs-field__box input::placeholder{color:var(--text-3);opacity:1}
+
+.pjs-cell{box-shadow:inset 0 0 0 1.5px var(--border-control);transition:box-shadow var(--dur-fast) var(--ease-standard)}
+.pjs-cell:focus,.pjs-cell:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--focus)}
+.pjs-cell[aria-invalid="true"]{box-shadow:inset 0 0 0 2px var(--status-danger)}
+.pjs-cell::placeholder{color:var(--text-3);opacity:1;font-weight:var(--weight-regular)}
+
+/* Numbers that change in place never shift: tabular figures, and a fixed width for timers. */
+.pjs-num,.pjs-cell,[role="timer"],[role="spinbutton"]{font-variant-numeric:tabular-nums}
+
+/* State layer above media (MediaCard): the layer sits over the photo and scrim, under the text. */
+.pjs-i--over::before{z-index:1}
+
+/* Tabs live in a horizontal scroller: draw their focus ring inside so it is never clipped. */
+[role="tab"]:focus-visible{outline-offset:-3px;border-radius:var(--radius-xs)}
+
+/* Segmented control radios */
+.pjs-seg{border:0;margin:0;padding:0;min-inline-size:0}
+.pjs-seg input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.pjs-seg input:focus-visible+span{outline:2px solid var(--focus);outline-offset:-2px}
+
+/* Dialog panel focus target */
+.pjs-sheet__panel:focus{outline:none}
+
+@media (forced-colors:active){
+  .pjs-i::before{display:none}
+  .pjs-check__box{border:2px solid CanvasText!important}
+  .pjs-field__box,.pjs-cell{border:1px solid CanvasText}
+  .pjs-field__box:focus-within,.pjs-cell:focus{outline:2px solid Highlight}
+}
+@media (prefers-reduced-motion:reduce){.pjs-i,.pjs-i::before{transition:none}}

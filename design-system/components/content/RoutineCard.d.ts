@@ -1,15 +1,16 @@
 /**
- * Saved routine summary with exercise list and a full-width start CTA.
+ * Saved routine card with one Start routine button.
  * @startingPoint section="Content" subtitle="Routine card with Start CTA" viewport="390x220"
  */
-export interface RoutineCardProps {
+export interface RoutineCardProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
   exercises?: string[];
-  /** e.g. "6 exercises · 55 min". */
-  meta?: string;
-  startLabel?: string;
+  meta?: React.ReactNode;
   onStart?: () => void;
+  /** Adds an "Options for {title}" button. */
   onMenu?: () => void;
-  style?: React.CSSProperties;
+  startLabel?: string;
+  /** Title element; default "h3". */
+  as?: React.ElementType;
 }
-export function RoutineCard(props: RoutineCardProps): JSX.Element;
+export function RoutineCard(props: RoutineCardProps): React.JSX.Element;

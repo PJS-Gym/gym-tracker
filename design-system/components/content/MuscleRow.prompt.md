@@ -1,5 +1,4 @@
-Body-activity row on a fixed label / bar / value grid; bar length encodes percent on a scale shared by the whole set.
+Body-activity row. Pass the set's largest value as `max` so all rows share one scale. There is no track behind the bar, so the top row never looks like 100%. Bars are ink-500 context; the highlighted row is pink. The value is always printed.
 ```jsx
-{rows.map(r => <MuscleRow key={r.name} name={r.name} percent={r.pct} max={14} highlight={r.name==="Glutes"} />)}
+{rows.map(([n,p],i)=><MuscleRow key={n} name={n} percent={p} max={rows[0][1]} highlight={i===0}/>)}
 ```
-Pass one `max` for every row. Highlight only the row the reader should notice; others stay neutral.

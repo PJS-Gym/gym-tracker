@@ -1,7 +1,8 @@
-export interface BadgeProps {
-  children?: React.ReactNode;
-  /** accent (pink, ink text), soft (strawberry tint, rose text), neutral, live (flare red), success (PR). All pass 4.5:1. */
-  tone?: "accent" | "soft" | "neutral" | "live" | "success";
-  style?: React.CSSProperties;
+/**
+ * Small sentence-case pill for a real state (new PR, live now, booked).
+ */
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** neutral; soft (strawberry, rose-800 text 6.3:1); accent (pink, ink); success; live (flare, white 5.4:1). */
+  tone?: "neutral" | "soft" | "accent" | "success" | "live";
 }
-export function Badge(props: BadgeProps): JSX.Element;
+export function Badge(props: BadgeProps): React.JSX.Element;

@@ -1,10 +1,11 @@
-export interface IconProps {
-  /** Lucide icon name, kebab-case (e.g. "dumbbell", "play", "chevron-left"). */
+/**
+ * Lucide outline icon (2px stroke) as inline SVG, tinted with currentColor.
+ */
+export interface IconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** One of Icon.names. Unknown names render a circle and log an error in development. */
   name: string;
-  /** Pixel size. Default 24. */
   size?: number;
-  /** Any CSS color; defaults to currentColor. */
-  color?: string;
-  style?: React.CSSProperties;
+  strokeWidth?: number;
 }
-export function Icon(props: IconProps): JSX.Element;
+export function Icon(props: IconProps): React.JSX.Element;
+export namespace Icon { const names: string[]; }

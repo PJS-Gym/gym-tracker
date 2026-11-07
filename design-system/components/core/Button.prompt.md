@@ -1,7 +1,7 @@
-Pill-shaped action button; use `primary` (pink) for the single main action on a screen.
+Pill-shaped action button. Use `primary` (pink fill, ink label) for the single main action on a screen; everything else is secondary, tonal, outline or ghost.
 ```jsx
-<Button variant="primary" size="lg" fullWidth>Start workout</Button>
-<Button variant="secondary" icon="play">Start Workout</Button>
-<Button variant="tonal" icon="plus" shape="rounded">Start Empty Workout</Button>
+<Button size="lg" fullWidth onClick={start}>Start workout</Button>
+<Button variant="tonal" size="sm" icon="plus">Add set</Button>
+<Button variant="ghost" size="sm">See all</Button>
 ```
-Variants: primary, secondary, tonal, outline, ghost, danger. Sizes sm 36 / md 48 / lg 60. Labels are sentence case. Press = scale .98 + slight darken; no other motion.
+Labels are sentence case and name exactly what happens; the same verb carries through the flow (Finish → Finish workout → "Workout finished"). Press scales to .98; hover (pointer devices) and press use a state layer from `tokens/interaction.css`. Never white text on pink.

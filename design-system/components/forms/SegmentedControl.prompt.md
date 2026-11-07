@@ -1,4 +1,4 @@
-2–4 option pill switcher (kg/lb, Week/Month/Year).
+2–4 mutually exclusive options (kg/lb, Week/Month/Year). Native radios, so arrow keys and screen readers work without extra code.
 ```jsx
-<SegmentedControl options={["Week","Month","Year"]} value="Week" />
+<SegmentedControl label="Time range" options={[{value:"week",label:"Week"},{value:"month",label:"Month"}]} value={range} onValueChange={setRange}/>
 ```

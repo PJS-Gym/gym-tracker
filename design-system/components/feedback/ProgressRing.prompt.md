@@ -1,4 +1,4 @@
-Circular countdown/progress for rest timers and goals.
+Circular progress for goals or an expanded rest view. Put the readable value in `children` (metric type, tabular figures).
 ```jsx
-<ProgressRing value={66}><span style={{fontSize:56,fontWeight:800}}>1:00</span></ProgressRing>
+<ProgressRing value={62} max={90} label="Rest" valueText="1:02 left"><span>1:02</span></ProgressRing>
 ```

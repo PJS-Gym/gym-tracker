@@ -1,7 +1,5 @@
-export interface ProgressDotsProps {
-  count?: number;
-  /** Active index (0-based) — stretches into a pink pill. */
-  index?: number;
-  style?: React.CSSProperties;
-}
-export function ProgressDots(props: ProgressDotsProps): JSX.Element;
+/**
+ * Carousel pager dots.
+ */
+export interface ProgressDotsProps extends React.HTMLAttributes<HTMLDivElement> { count: number; index: number }
+export function ProgressDots(props: ProgressDotsProps): React.JSX.Element;

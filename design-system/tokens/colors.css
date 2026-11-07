@@ -1,29 +1,55 @@
 :root{
-/* Palette — pastel pinks (from the supplied palette). Surfaces, fills, tracks only: never text on its own. */
+/* Palette — pastel pinks (from the supplied palette). Surfaces, fills, tracks only: never text, icons or essential lines on light surfaces. */
 --pjs-blush:#FAE7E9;--pjs-ballet:#F3DADE;--pjs-frosting:#F3D5DD;--pjs-cotton:#F6D7E6;--pjs-strawberry:#EEC8D3;--pjs-rosewater:#EAC5CD;--pjs-petal:#E6BCC6;--pjs-dusty:#DEAAB7;--pjs-cherry:#EECAD6;
-/* Deep rose — same hue, darkened for contrast. Actions, text accents, data highlight. */
+/* Deep rose — same hue, darkened for contrast. Text accents, focus, data. */
 --pjs-rose-500:#C56A85;--pjs-rose-600:#B5546F;--pjs-rose-700:#9C3A57;--pjs-rose-800:#7A2742;--pjs-rose-900:#4A1626;
-/* Primary pink — fills only. Labels on it are ink (5.6:1). As text on white it is 3:1, so text accents use rose-700. */
+/* Primary pink — fills only. Labels on it are ink (5.37:1). As text on white it is 3.05:1, so text accents use rose-700. */
 --pjs-pink:#FF4FA0;--pjs-pink-press:#E6378A;--pjs-pink-soft:var(--pjs-strawberry);--pjs-pink-ink:var(--ink-900);
 --pjs-flare:#C62F4B;--pjs-flare-soft:rgba(198,47,75,.12);
 /* Neutrals — warm plum ink */
 --ink-1000:#120A0D;--ink-950:#1E1216;--ink-900:#2B1B21;--ink-850:#3A2730;--ink-800:#4A3540;--ink-700:#5E434C;--ink-600:#7D5F69;--ink-500:#9C808A;--ink-400:#BCA2AB;--ink-300:#D8C4CB;--ink-200:#EADCE1;--ink-100:#F5EDEF;--ink-50:#FBF6F7;--ink-0:#FFFFFF;
-/* Status (all ≥4.5:1 on white) */
---status-success:#2E7151;--status-warning:#8A5A00;--status-danger:var(--pjs-flare);--status-info:var(--ink-700);
-/* Semantic — white is the default theme; pink is for accents only */
---surface-app:#FFFFFF;--surface-card:#FFFFFF;--surface-raised:#F5F4F5;--surface-field:#F1F0F1;--surface-sunken:#EAE8EA;--surface-overlay:rgba(30,18,22,.64);--surface-inverse:var(--ink-900);
---text-1:var(--ink-900);--text-2:#5E434C;--text-3:#7D5F69;--text-inverse:var(--pjs-blush);--text-accent:var(--pjs-rose-700);--text-on-accent:var(--ink-900);
+
+/* ===== Semantic (light, the default theme) ===== */
+/* Surfaces. raised and field share ink-100; sunken is a non-text surface (text-3 and control borders fail on it). */
+--surface-app:#FFFFFF;--surface-card:#FFFFFF;--surface-raised:var(--ink-100);--surface-field:var(--ink-100);--surface-sunken:var(--ink-200);--surface-overlay:rgba(30,18,22,.64);--surface-inverse:var(--ink-900);
+/* Text. Ratios on white: text-1 16.4, text-2 8.8, text-3 5.7, text-accent 6.65 */
+--text-1:var(--ink-900);--text-2:var(--ink-700);--text-3:var(--ink-600);--text-inverse:var(--pjs-blush);--text-accent:var(--pjs-rose-700);
+--text-on-accent:var(--ink-900);        /* ink on pink: 5.37:1 */
+--text-on-accent-soft:var(--pjs-rose-800); /* on strawberry: 6.30:1 */
+--text-on-danger:#FFFFFF;               /* on flare: 5.37:1 */
+/* Lines */
 --border-subtle:rgba(122,39,66,.12);--border-strong:rgba(122,39,66,.26);--border-dashed:rgba(122,39,66,.34);
---accent:var(--pjs-pink);--accent-press:var(--pjs-pink-press);--accent-soft:var(--pjs-strawberry);
-/* Data viz — deep rose leads, pastels for tracks */
---data-1:var(--pjs-pink);--data-1-soft:var(--pjs-petal);--data-2:var(--pjs-rose-500);--data-3:var(--ink-700);--data-4:var(--pjs-dusty);--data-track:var(--pjs-ballet);
+--border-control:var(--ink-500);        /* edges of interactive controls: 3.58:1 on white, 3.11 on raised/field */
+--focus:var(--pjs-rose-700);            /* focus ring: 6.65 on white, 5.78 on field, 4.38 on strawberry */
+/* Accent */
+--accent:var(--pjs-pink);--accent-soft:var(--pjs-strawberry);
+/* Status (text-safe on white: success 5.84, warning 5.93, danger 5.37) */
+--status-success:#2E7151;--status-success-soft:rgba(46,113,81,.12);--status-warning:#8A5A00;--status-danger:var(--pjs-flare);--status-info:var(--ink-700);
+/* Data viz — pink is the one mark that matters, always with a direct label; ink-500 is context */
+--data-1:var(--pjs-pink);--data-2:var(--pjs-rose-700);--data-3:var(--ink-700);--data-context:var(--ink-500);--data-4:var(--data-context);--data-track:var(--pjs-ballet);
+/* Media */
+--media-placeholder:radial-gradient(120% 90% at 60% 25%,#4A3540 0%,#2B1B21 45%,#120A0D 100%);
 --scrim:rgba(30,18,22,.4);
+/* On-media palette: fixed, never themed. Use inside [data-surface="media"]. */
+--on-media-1:#FFFFFF;--on-media-2:var(--pjs-blush);--on-media-accent:var(--pjs-petal);
 }
+
 [data-theme="dark"]{
 --surface-app:#1A0F13;--surface-card:#24161B;--surface-raised:#2F1D24;--surface-field:#3A2730;--surface-sunken:#120A0D;--surface-overlay:rgba(18,10,13,.64);--surface-inverse:var(--pjs-blush);
---text-1:var(--pjs-blush);--text-2:#D9B8C2;--text-3:#B0919B;--text-inverse:var(--ink-900);--text-accent:var(--pjs-petal);--text-on-accent:var(--ink-900);
+--text-1:var(--pjs-blush);--text-2:#D9B8C2;--text-3:#B0919B;--text-inverse:var(--ink-900);--text-accent:var(--pjs-petal);
+--text-on-accent:var(--ink-900);--text-on-accent-soft:var(--pjs-petal);--text-on-danger:#FFFFFF;
 --border-subtle:rgba(250,231,233,.1);--border-strong:rgba(250,231,233,.22);--border-dashed:rgba(250,231,233,.3);
---accent:var(--pjs-petal);--accent-press:var(--pjs-dusty);--accent-soft:rgba(230,188,198,.16);
---data-1:var(--pjs-petal);--data-1-soft:rgba(230,188,198,.3);--data-2:var(--pjs-dusty);--data-3:#B0919B;--data-track:#3A2730;
+--border-control:#B0919B;--focus:var(--pjs-petal);
+--accent:var(--pjs-pink);--accent-soft:rgba(230,188,198,.16);
+--status-success:#6FC79A;--status-success-soft:rgba(111,199,154,.16);--status-warning:#E0A84A;--status-danger:#F07A8F;
+--data-1:var(--pjs-pink);--data-2:var(--pjs-petal);--data-3:#B0919B;--data-context:var(--ink-500);--data-track:#3A2730;
 --scrim:rgba(0,0,0,.6);
+}
+
+/* Content laid over photography or video, in either theme. Text must sit where the scrim is at least .60 opaque. */
+[data-surface="media"]{
+--text-1:var(--on-media-1);--text-2:var(--on-media-2);--text-3:var(--on-media-2);
+--text-accent:var(--on-media-accent); /* icons and large text only: 3.38:1 at the .60 floor */
+--border-subtle:rgba(255,255,255,.16);--focus:#FFFFFF;
+color:var(--text-1);
 }

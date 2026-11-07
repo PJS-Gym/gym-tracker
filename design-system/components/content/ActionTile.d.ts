@@ -1,9 +1,10 @@
-export interface ActionTileProps {
+/**
+ * Quick-action tile; dashed for an empty slot.
+ */
+export interface ActionTileProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: string;
-  label: string;
-  /** Dashed outline "add" slot with accent label. */
+  label: React.ReactNode;
+  /** Empty "add" slot: dashed border, deep-rose label. */
   dashed?: boolean;
-  onClick?: () => void;
-  style?: React.CSSProperties;
 }
-export function ActionTile(props: ActionTileProps): JSX.Element;
+export const ActionTile: React.ForwardRefExoticComponent<ActionTileProps & React.RefAttributes<HTMLButtonElement>>;

@@ -1,5 +1,5 @@
-<!-- @dsCard group="Components" viewport="700x300" name="Feedback" -->
-<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<!-- @dsCard group="Components" viewport="760x420" name="Feedback" subtitle="Progress, rest timer, toasts, empty state, sheet" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PJS Gym · Feedback components</title><link rel="stylesheet" href="../../styles.css">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -7,11 +7,23 @@
 <style>body{padding:20px}.r{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.c{display:flex;flex-direction:column;gap:14px}</style></head><body><div id="root"></div>
 <script type="text/babel">
 const NS=window.PJSGymDesignSystem_ff31cf;
-const {ProgressDots,ProgressBar,ProgressRing,Sheet,Toast,Button}=NS;
-function App(){return <div style={{display:"grid",gridTemplateColumns:"180px 1fr 240px",gap:20,alignItems:"center"}}>
-<ProgressRing value={66} size={170}><span style={{fontSize:40,fontWeight:800,fontVariantNumeric:"tabular-nums"}}>1:00</span><span style={{fontSize:14,color:"var(--text-2)"}}>Rest</span></ProgressRing>
-<div className="c"><ProgressDots count={10} index={4}/><ProgressBar value={60}/><ProgressBar segments={5} value={2}/><Toast tone="success" icon="trophy" message="New PR: bench 85 kg"/><Toast message="Workout saved"/></div>
-<div style={{position:"relative",height:260,borderRadius:20,overflow:"hidden",background:"var(--surface-card)"}}><Sheet title="Finish workout?"><Button fullWidth>Finish</Button><Button variant="tonal" fullWidth>Keep going</Button></Sheet></div>
+const {ProgressDots,ProgressBar,ProgressRing,Sheet,Toast,ToastRegion,Button,RestTimerBar,EmptyState}=NS;
+function App(){const [open,setOpen]=React.useState(true);const [ends,setEnds]=React.useState(null);
+React.useEffect(()=>{setEnds(Date.now()+62000);},[]);
+return <div style={{display:"grid",gridTemplateColumns:"170px 1fr 250px",gap:20,alignItems:"start"}}>
+<ProgressRing value={62} max={90} size={160} label="Rest" valueText="1:02 left"><span style={{fontSize:"var(--fs-metric-l)",fontWeight:800,fontVariantNumeric:"tabular-nums"}}>1:02</span><span style={{fontSize:14,color:"var(--text-2)"}}>Rest</span></ProgressRing>
+<div className="c">
+<div style={{display:"flex",gap:10,alignItems:"center"}}><ProgressBar value={3} max={5} label="Sets logged" valueText="3 of 5 sets" style={{flex:1}}/><span style={{fontSize:13,fontWeight:700}}>3 of 5 sets</span></div>
+<ProgressBar variant="segmented" value={2} max={4} label="Sessions this week" valueText="2 of 4"/>
+<ProgressDots count={6} index={2}/>
+{ends&&<RestTimerBar endsAt={ends} total={90} next="Bench press, set 3" onAdjust={d=>setEnds(e=>e+d*1000)} onSkip={()=>setEnds(Date.now()+90000)}/>}
+<div className="r"><Toast message="Set 3 removed" action={{label:"Undo",onAction:()=>{}}}/><Toast message="Workout finished" icon="check"/></div>
+<EmptyState title="No workouts this week" body="Start one from the Train tab." action={<Button size="sm">Start workout</Button>}/>
+</div>
+<div style={{position:"relative",height:300,borderRadius:20,overflow:"hidden",background:"var(--surface-raised)"}}>
+<div style={{padding:20,display:"flex",flexDirection:"column",gap:8,alignItems:"flex-start"}}><b>Push day</b><Button size="sm" variant="tonal" onClick={()=>setOpen(true)}>Finish</Button></div>
+<Sheet open={open} onOpenChange={setOpen} title="Finish workout?"><Button fullWidth onClick={()=>setOpen(false)}>Finish workout</Button><Button variant="tonal" fullWidth onClick={()=>setOpen(false)}>Keep training</Button></Sheet>
+</div>
 </div>;}
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script></body></html>
