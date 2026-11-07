@@ -19,5 +19,11 @@ class Settings(BaseSettings):
     # Pooled Neon connection string.
     DATABASE_URL: str | None = None
 
+    # Langfuse (LLM tracing, prompts, evals). Tracing is off when keys are missing.
+    LANGFUSE_PUBLIC_KEY: str | None = None
+    LANGFUSE_SECRET_KEY: str | None = None
+    # EU region. US region is https://us.cloud.langfuse.com.
+    LANGFUSE_BASE_URL: str = "https://cloud.langfuse.com"
+
 
 settings = Settings()
