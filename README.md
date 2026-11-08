@@ -113,22 +113,36 @@ uv run fastapi dev
 
 Postgres runs on [Neon](https://neon.com); `neon.ts` in the repo root declares the services. Only the backend connects to it.
 
-From the repo root:
+### Local development
 
+Requires running `Docker` and `make`. From the repo root:
+
+Start Postgres and apply migrations
 ```bash
-npm i -g neon
-neon login
-neon link --org-id org-rough-cake-25119073 --project-id muddy-wave-76386845 --branch production
-neon env pull   # writes DATABASE_URL to .env.local in the repo root
+make db-up
+```
+Run the backend against the local database
+```bash
+make backend-local
 ```
 
-The backend reads that root `.env.local` (`backend/app/core/config.py`) and queries Postgres with psycopg (`backend/app/core/db.py`). Check the connection at http://localhost:8000/api/v1/health/db.
+`make db-down` stops the database without deleting data. Check the connection at http://localhost:8000/api/v1/health/db.
+
+### Migrations
+Apply migrations to the configured database
+```bash
+make migrate
+```
+
+For production or a PR database, explicitly select the target branch:
+
+```bash
+DATABASE_URL_UNPOOLED='<target branch direct connection string>' make migrate
+```
+
+Run before deploying the corresponding backend. Migrations do not run automatically on merge or application startup.
 
 The project's settings (region, Postgres version, compute, retention) are managed with Terraform in `infra/neon/`. See its README.
 
-## CI
+Create new migrations in `backend/` with `uv run alembic revision -m "description"`, then fill in `upgrade()` and `downgrade()`.
 
-On every pull request and push to `main`:
-
-- `frontend`: `bun install --frozen-lockfile`, `bun run lint`, `bun run build`
-- `backend`: `uv sync --locked`, then checks that `app.main` imports

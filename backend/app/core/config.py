@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     # Pooled Neon connection string.
     DATABASE_URL: str | None = None
+    # Direct connection for schema migrations; falls back to DATABASE_URL.
+    DATABASE_URL_UNPOOLED: str | None = None
 
     # Langfuse (LLM tracing, prompts, evals). Tracing is off when keys are missing.
     LANGFUSE_PUBLIC_KEY: str | None = None
