@@ -1,0 +1,776 @@
+{
+  "schema_version": 1,
+  "meta": {
+    "week_start": "",
+    "week_end": "",
+    "display_name": "Demo"
+  },
+  "summary": {
+    "text": "4 treningi, 4 dni aktywne, 105 serii efektywnych i 28502 kg tonażu (+27,4% względem poprzedniego tygodnia).",
+    "workouts": 4,
+    "active_days": 4,
+    "effective_sets": 105,
+    "tonnage_kg": 28502,
+    "vs_previous_week": {
+      "workouts": {
+        "status": "percent",
+        "percent": 33.3
+      },
+      "active_days": {
+        "status": "percent",
+        "percent": 33.3
+      },
+      "effective_sets": {
+        "status": "percent",
+        "percent": 25.0
+      },
+      "tonnage_kg": {
+        "status": "percent",
+        "percent": 27.4
+      }
+    }
+  },
+  "muscle_map": {
+    "text": "Najwięcej pracy dostała partia klatka piersiowa: 13 serii, +85,7% względem poprzedniego tygodnia.",
+    "groups": [
+      {
+        "key": "chest",
+        "name_pl": "klatka piersiowa",
+        "effective_sets": 13,
+        "tonnage_kg": 4127.5,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 85.7
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 53.4
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 92.6
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 85.1
+          }
+        }
+      },
+      {
+        "key": "upper_back",
+        "name_pl": "górna część pleców",
+        "effective_sets": 8.5,
+        "tonnage_kg": 2500,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 21.4
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 4.2
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 51.1
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 44.9
+          }
+        }
+      },
+      {
+        "key": "lats",
+        "name_pl": "najszersze grzbietu",
+        "effective_sets": 9.5,
+        "tonnage_kg": 1725,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 46.2
+          },
+          "tonnage_kg": {
+            "status": "new",
+            "percent": null
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 68.9
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 338.1
+          }
+        }
+      },
+      {
+        "key": "traps",
+        "name_pl": "kaptury",
+        "effective_sets": 1.5,
+        "tonnage_kg": 0,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 0.0
+          },
+          "tonnage_kg": null
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 33.3
+          },
+          "tonnage_kg": null
+        }
+      },
+      {
+        "key": "lower_back",
+        "name_pl": "dolna część pleców",
+        "effective_sets": 5,
+        "tonnage_kg": 1875,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 0.0
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 4.2
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 33.3
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 44.9
+          }
+        }
+      },
+      {
+        "key": "shoulders",
+        "name_pl": "barki",
+        "effective_sets": 13,
+        "tonnage_kg": 1440,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 30.0
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 2.1
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 57.6
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 39.1
+          }
+        }
+      },
+      {
+        "key": "biceps",
+        "name_pl": "biceps",
+        "effective_sets": 8,
+        "tonnage_kg": 522,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 23.1
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 3.6
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 52.4
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 43.2
+          }
+        }
+      },
+      {
+        "key": "triceps",
+        "name_pl": "triceps",
+        "effective_sets": 11,
+        "tonnage_kg": 1125,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 37.5
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 4.2
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 63.0
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 44.9
+          }
+        }
+      },
+      {
+        "key": "forearms",
+        "name_pl": "przedramiona",
+        "effective_sets": 3,
+        "tonnage_kg": 0,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 0.0
+          },
+          "tonnage_kg": null
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 33.3
+          },
+          "tonnage_kg": null
+        }
+      },
+      {
+        "key": "abs",
+        "name_pl": "brzuch",
+        "effective_sets": 3,
+        "tonnage_kg": 1912.5,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "new",
+            "percent": null
+          },
+          "tonnage_kg": {
+            "status": "new",
+            "percent": null
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 300.0
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 353.3
+          }
+        }
+      },
+      {
+        "key": "glutes",
+        "name_pl": "pośladki",
+        "effective_sets": 5,
+        "tonnage_kg": 0,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 0.0
+          },
+          "tonnage_kg": null
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 33.3
+          },
+          "tonnage_kg": null
+        }
+      },
+      {
+        "key": "quads",
+        "name_pl": "czworogłowe uda",
+        "effective_sets": 8.5,
+        "tonnage_kg": 8640,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 0.0
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 5.9
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 33.3
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 50.0
+          }
+        }
+      },
+      {
+        "key": "hamstrings",
+        "name_pl": "dwugłowe uda",
+        "effective_sets": 8,
+        "tonnage_kg": 1710,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 0.0
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 5.6
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 33.3
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 49.0
+          }
+        }
+      },
+      {
+        "key": "calves",
+        "name_pl": "łydki",
+        "effective_sets": 8,
+        "tonnage_kg": 2925,
+        "vs_previous_week": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 0.0
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 8.3
+          }
+        },
+        "vs_4_week_average": {
+          "effective_sets": {
+            "status": "percent",
+            "percent": 33.3
+          },
+          "tonnage_kg": {
+            "status": "percent",
+            "percent": 57.6
+          }
+        }
+      },
+      {
+        "key": "adductors",
+        "name_pl": "przywodziciele",
+        "effective_sets": 0,
+        "tonnage_kg": 0,
+        "vs_previous_week": {
+          "effective_sets": null,
+          "tonnage_kg": null
+        },
+        "vs_4_week_average": {
+          "effective_sets": null,
+          "tonnage_kg": null
+        }
+      },
+      {
+        "key": "abductors",
+        "name_pl": "odwodziciele",
+        "effective_sets": 0,
+        "tonnage_kg": 0,
+        "vs_previous_week": {
+          "effective_sets": null,
+          "tonnage_kg": null
+        },
+        "vs_4_week_average": {
+          "effective_sets": null,
+          "tonnage_kg": null
+        }
+      },
+      {
+        "key": "neck",
+        "name_pl": "szyja",
+        "effective_sets": 0,
+        "tonnage_kg": 0,
+        "vs_previous_week": {
+          "effective_sets": null,
+          "tonnage_kg": null
+        },
+        "vs_4_week_average": {
+          "effective_sets": null,
+          "tonnage_kg": null
+        }
+      }
+    ],
+    "top_groups": [
+      "chest",
+      "shoulders",
+      "triceps"
+    ]
+  },
+  "strength": {
+    "text": "Siła wzrosła w 9 partiach.",
+    "exercises": [
+      {
+        "name": "Leg Press",
+        "best_e1rm_kg": 238,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 6.2
+        }
+      },
+      {
+        "name": "Barbell Deadlift",
+        "best_e1rm_kg": 145.83,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 4.2
+        }
+      },
+      {
+        "name": "Barbell Squat",
+        "best_e1rm_kg": 126,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 5.0
+        }
+      },
+      {
+        "name": "Barbell Bench Press - Medium Grip",
+        "best_e1rm_kg": 91.83,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 3.6
+        }
+      },
+      {
+        "name": "Bent Over Barbell Row",
+        "best_e1rm_kg": 83.33,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 4.2
+        }
+      },
+      {
+        "name": "Wide-Grip Lat Pulldown",
+        "best_e1rm_kg": 76.67,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 9.5
+        }
+      },
+      {
+        "name": "Lying Leg Curls",
+        "best_e1rm_kg": 66.5,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 5.6
+        }
+      },
+      {
+        "name": "Standing Military Press",
+        "best_e1rm_kg": 52.25,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 3.1
+        }
+      },
+      {
+        "name": "Triceps Pushdown",
+        "best_e1rm_kg": 43.75,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 4.2
+        }
+      },
+      {
+        "name": "Dumbbell Bench Press",
+        "best_e1rm_kg": 38.67,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 7.4
+        }
+      },
+      {
+        "name": "Pompki na poręczach z plecakiem",
+        "best_e1rm_kg": 23.75,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 15.4
+        }
+      },
+      {
+        "name": "Dumbbell Bicep Curl",
+        "best_e1rm_kg": 20.3,
+        "vs_previous_4_weeks": {
+          "status": "percent",
+          "percent": 3.6
+        }
+      }
+    ],
+    "improved_groups": [
+      {
+        "key": "chest",
+        "name_pl": "klatka piersiowa",
+        "exercise_name": "Pompki na poręczach z plecakiem",
+        "percent": 15.4,
+        "text": "Siła w partii klatka piersiowa wzrosła: Pompki na poręczach z plecakiem, +15,4%."
+      },
+      {
+        "key": "lats",
+        "name_pl": "najszersze grzbietu",
+        "exercise_name": "Wide-Grip Lat Pulldown",
+        "percent": 9.5,
+        "text": "Siła w partii najszersze grzbietu wzrosła: Wide-Grip Lat Pulldown, +9,5%."
+      },
+      {
+        "key": "quads",
+        "name_pl": "czworogłowe uda",
+        "exercise_name": "Leg Press",
+        "percent": 6.2,
+        "text": "Siła w partii czworogłowe uda wzrosła: Leg Press, +6,2%."
+      },
+      {
+        "key": "hamstrings",
+        "name_pl": "dwugłowe uda",
+        "exercise_name": "Lying Leg Curls",
+        "percent": 5.6,
+        "text": "Siła w partii dwugłowe uda wzrosła: Lying Leg Curls, +5,6%."
+      },
+      {
+        "key": "triceps",
+        "name_pl": "triceps",
+        "exercise_name": "Triceps Pushdown",
+        "percent": 4.2,
+        "text": "Siła w partii triceps wzrosła: Triceps Pushdown, +4,2%."
+      },
+      {
+        "key": "lower_back",
+        "name_pl": "dolna część pleców",
+        "exercise_name": "Barbell Deadlift",
+        "percent": 4.2,
+        "text": "Siła w partii dolna część pleców wzrosła: Barbell Deadlift, +4,2%."
+      },
+      {
+        "key": "upper_back",
+        "name_pl": "górna część pleców",
+        "exercise_name": "Bent Over Barbell Row",
+        "percent": 4.2,
+        "text": "Siła w partii górna część pleców wzrosła: Bent Over Barbell Row, +4,2%."
+      },
+      {
+        "key": "biceps",
+        "name_pl": "biceps",
+        "exercise_name": "Dumbbell Bicep Curl",
+        "percent": 3.6,
+        "text": "Siła w partii biceps wzrosła: Dumbbell Bicep Curl, +3,6%."
+      },
+      {
+        "key": "shoulders",
+        "name_pl": "barki",
+        "exercise_name": "Standing Military Press",
+        "percent": 3.1,
+        "text": "Siła w partii barki wzrosła: Standing Military Press, +3,1%."
+      }
+    ]
+  },
+  "records": {
+    "text": "Nowe rekordy życiowe w tym tygodniu: 26.",
+    "items": [
+      {
+        "exercise_name": "Barbell Bench Press - Medium Grip",
+        "type": "e1rm",
+        "value_kg": 91.83,
+        "previous_kg": 88.67
+      },
+      {
+        "exercise_name": "Barbell Bench Press - Medium Grip",
+        "type": "max_weight",
+        "value_kg": 72.5,
+        "previous_kg": 70
+      },
+      {
+        "exercise_name": "Barbell Deadlift",
+        "type": "e1rm",
+        "value_kg": 145.83,
+        "previous_kg": 140
+      },
+      {
+        "exercise_name": "Barbell Deadlift",
+        "type": "max_weight",
+        "value_kg": 125,
+        "previous_kg": 120
+      },
+      {
+        "exercise_name": "Barbell Squat",
+        "type": "e1rm",
+        "value_kg": 126,
+        "previous_kg": 120
+      },
+      {
+        "exercise_name": "Barbell Squat",
+        "type": "max_weight",
+        "value_kg": 105,
+        "previous_kg": 100
+      },
+      {
+        "exercise_name": "Bent Over Barbell Row",
+        "type": "e1rm",
+        "value_kg": 83.33,
+        "previous_kg": 80
+      },
+      {
+        "exercise_name": "Bent Over Barbell Row",
+        "type": "max_weight",
+        "value_kg": 62.5,
+        "previous_kg": 60
+      },
+      {
+        "exercise_name": "Cable Crunch",
+        "type": "max_weight",
+        "value_kg": 42.5,
+        "previous_kg": 37.5
+      },
+      {
+        "exercise_name": "Dumbbell Bench Press",
+        "type": "e1rm",
+        "value_kg": 38.67,
+        "previous_kg": 36
+      },
+      {
+        "exercise_name": "Dumbbell Bench Press",
+        "type": "max_weight",
+        "value_kg": 29,
+        "previous_kg": 27
+      },
+      {
+        "exercise_name": "Dumbbell Bicep Curl",
+        "type": "e1rm",
+        "value_kg": 20.3,
+        "previous_kg": 19.6
+      },
+      {
+        "exercise_name": "Dumbbell Bicep Curl",
+        "type": "max_weight",
+        "value_kg": 14.5,
+        "previous_kg": 14
+      },
+      {
+        "exercise_name": "Leg Press",
+        "type": "e1rm",
+        "value_kg": 238,
+        "previous_kg": 224
+      },
+      {
+        "exercise_name": "Leg Press",
+        "type": "max_weight",
+        "value_kg": 170,
+        "previous_kg": 160
+      },
+      {
+        "exercise_name": "Lying Leg Curls",
+        "type": "e1rm",
+        "value_kg": 66.5,
+        "previous_kg": 63
+      },
+      {
+        "exercise_name": "Lying Leg Curls",
+        "type": "max_weight",
+        "value_kg": 47.5,
+        "previous_kg": 45
+      },
+      {
+        "exercise_name": "Pompki na poręczach z plecakiem",
+        "type": "e1rm",
+        "value_kg": 23.75,
+        "previous_kg": 20.58
+      },
+      {
+        "exercise_name": "Pompki na poręczach z plecakiem",
+        "type": "max_weight",
+        "value_kg": 18.75,
+        "previous_kg": 16.25
+      },
+      {
+        "exercise_name": "Standing Calf Raises",
+        "type": "max_weight",
+        "value_kg": 65,
+        "previous_kg": 60
+      },
+      {
+        "exercise_name": "Standing Military Press",
+        "type": "e1rm",
+        "value_kg": 52.25,
+        "previous_kg": 50.67
+      },
+      {
+        "exercise_name": "Standing Military Press",
+        "type": "max_weight",
+        "value_kg": 41.25,
+        "previous_kg": 40
+      },
+      {
+        "exercise_name": "Triceps Pushdown",
+        "type": "e1rm",
+        "value_kg": 43.75,
+        "previous_kg": 42
+      },
+      {
+        "exercise_name": "Triceps Pushdown",
+        "type": "max_weight",
+        "value_kg": 31.25,
+        "previous_kg": 30
+      },
+      {
+        "exercise_name": "Wide-Grip Lat Pulldown",
+        "type": "e1rm",
+        "value_kg": 76.67,
+        "previous_kg": 70
+      },
+      {
+        "exercise_name": "Wide-Grip Lat Pulldown",
+        "type": "max_weight",
+        "value_kg": 57.5,
+        "previous_kg": 52.5
+      }
+    ]
+  },
+  "body": null,
+  "neglected": {
+    "text": "Bez serii przez 2 ostatnie tygodnie: przywodziciele, odwodziciele, szyja.",
+    "groups": [
+      {
+        "key": "adductors",
+        "name_pl": "przywodziciele"
+      },
+      {
+        "key": "abductors",
+        "name_pl": "odwodziciele"
+      },
+      {
+        "key": "neck",
+        "name_pl": "szyja"
+      }
+    ]
+  }
+}

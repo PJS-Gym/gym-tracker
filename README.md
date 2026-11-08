@@ -136,6 +136,12 @@ Import the shared exercises from [free-exercise-db](https://github.com/yuhonas/f
 uv run python -m app.seed.import_exercises
 ```
 
+Create the demo account with 8 weeks of data, after the import. Running it again rebuilds the account from scratch:
+
+```bash
+uv run python -m app.seed.demo
+```
+
 The project's settings (region, Postgres version, compute, retention) are managed with Terraform in `infra/neon/`. See its README.
 
 ## CI

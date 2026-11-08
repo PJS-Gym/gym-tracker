@@ -116,11 +116,14 @@ CREATE_STATEMENTS = [
     """,
     "CREATE INDEX workouts_user_date_idx ON workouts (user_id, workout_date)",
     # Position constraints are deferred so a reorder can swap two rows in one transaction.
+    # The exercise reference is deferred so deleting a user can remove their own exercises
+    # before the cascade through workouts has removed the rows that point at them.
     """
     CREATE TABLE workout_exercises (
         id          bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         workout_id  bigint NOT NULL REFERENCES workouts (id) ON DELETE CASCADE,
-        exercise_id bigint NOT NULL REFERENCES exercises (id),
+        exercise_id bigint NOT NULL REFERENCES exercises (id)
+            DEFERRABLE INITIALLY DEFERRED,
         position    integer NOT NULL,
         CONSTRAINT workout_exercises_position_unique UNIQUE (workout_id, position)
             DEFERRABLE INITIALLY DEFERRED
