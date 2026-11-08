@@ -130,6 +130,12 @@ Schema changes are Alembic migrations in `backend/migrations/versions/`. Apply t
 uv run alembic upgrade head
 ```
 
+Import the shared exercises from [free-exercise-db](https://github.com/yuhonas/free-exercise-db), also from `backend/`. Running it again updates them without creating duplicates:
+
+```bash
+uv run python -m app.seed.import_exercises
+```
+
 The project's settings (region, Postgres version, compute, retention) are managed with Terraform in `infra/neon/`. See its README.
 
 ## CI
