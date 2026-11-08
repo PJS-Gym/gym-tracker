@@ -1,0 +1,41 @@
+name: Backend
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: gym
+          POSTGRES_PASSWORD: gym
+          POSTGRES_DB: gym_tracker
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U gym -d gym_tracker"
+          --health-interval 2s --health-timeout 5s --health-retries 30
+    env:
+      DATABASE_URL: postgresql://gym:gym@localhost:5432/gym_tracker
+      DATABASE_URL_UNPOOLED: postgresql://gym:gym@localhost:5432/gym_tracker
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.7"
+      - run: uv sync --locked
+      - run: uv run python -c "import app.main"
+      - run: uv run alembic upgrade head
+      - run: uv run python -m unittest discover -s tests
+      - run: uv run alembic upgrade head
+      - run: uv run alembic downgrade base
+      - run: uv run alembic upgrade head
