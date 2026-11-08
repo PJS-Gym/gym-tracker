@@ -124,6 +124,24 @@ neon env pull   # writes DATABASE_URL to .env.local in the repo root
 
 The backend reads that root `.env.local` (`backend/app/core/config.py`) and queries Postgres with psycopg (`backend/app/core/db.py`). Check the connection at http://localhost:8000/api/v1/health/db.
 
+Schema changes are Alembic migrations in `backend/migrations/versions/`. Apply them to the branch in `.env.local` from `backend/`:
+
+```bash
+uv run alembic upgrade head
+```
+
+Import the shared exercises from [free-exercise-db](https://github.com/yuhonas/free-exercise-db), also from `backend/`. Running it again updates them without creating duplicates:
+
+```bash
+uv run python -m app.seed.import_exercises
+```
+
+Create the demo account with 8 weeks of data, after the import. Running it again rebuilds the account from scratch:
+
+```bash
+uv run python -m app.seed.demo
+```
+
 The project's settings (region, Postgres version, compute, retention) are managed with Terraform in `infra/neon/`. See its README.
 
 ## CI
