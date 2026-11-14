@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { SignUpForm } from "@/features/auth/sign-up-form";
+import { OnboardingSignUp } from "@/features/onboarding/onboarding-sign-up";
 import { uiPreview } from "@/lib/ui-preview";
 
 export const metadata: Metadata = { title: "Załóż konto" };
@@ -18,5 +18,5 @@ export default function SignUpPage() {
 
 async function GuestsOnly() {
   if ((await auth()).userId) redirect("/");
-  return <SignUpForm title="Załóż konto" intro="Potem zadamy ci kilka pytań." />;
+  return <OnboardingSignUp />;
 }
