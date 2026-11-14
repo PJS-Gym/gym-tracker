@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode, Suspense, useEffect, useRef, useState } from "react";
 import { AppIcon } from "@/components/app-icons";
 import { Icon, Sheet, Wordmark } from "@/design-system";
+import { ResumeWorkout } from "@/features/logger/resume-workout";
 import { ThemeSwitch } from "@/features/theme/theme-switch";
 import { activeDestination, type Destination, DESTINATIONS, GROUPS, NEW_WORKOUT_HREF } from "./destinations";
 import { SignOut } from "./sign-out";
@@ -93,6 +94,11 @@ export function AppFrame({ children, account }: { children: ReactNode; account?:
         </div>
 
         <div ref={dock} className="pointer-events-none absolute inset-x-0 bottom-0 z-[var(--z-dock)] grid">
+          <div className="pointer-events-auto">
+            <Suspense fallback={null}>
+              <ResumeWorkout />
+            </Suspense>
+          </div>
           {/* Its own fixed layer during a transition, so moving content always passes beneath it. */}
           <div className="pointer-events-auto md:hidden" style={{ viewTransitionName: "app-tabbar" }}>
             <WithActive>{(active) => <PhoneTabBar active={active} onMore={() => setMoreOpen(true)} />}</WithActive>
