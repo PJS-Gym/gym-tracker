@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Screen } from "@/components/screen";
+import { StartContent, StartPlaceholder } from "@/features/home/start-content";
 
 export const metadata: Metadata = { title: "Start" };
 
-// Start's content (last workout, this week) arrives with the Start screen.
+// The greeting is the screen's heading, so Start has no top bar.
 export default function StartPage() {
-  return <Screen title="Start" />;
+  return (
+    <Screen title="Start" header={false} width="wide">
+      <Suspense fallback={<StartPlaceholder />}>
+        <StartContent />
+      </Suspense>
+    </Screen>
+  );
 }
