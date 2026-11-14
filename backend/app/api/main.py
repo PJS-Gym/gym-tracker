@@ -1,7 +1,15 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from app.api.routes import health, items
+from app.api.deps import get_current_user
+from app.api.routes import health, items, me
 
 api_router = APIRouter()
+
+# Open to anyone.
 api_router.include_router(health.router)
 api_router.include_router(items.router)
+
+# Everything here needs a valid Clerk session token (401 otherwise). Add new routes to this router.
+protected_router = APIRouter(dependencies=[Depends(get_current_user)])
+protected_router.include_router(me.router)
+api_router.include_router(protected_router)
