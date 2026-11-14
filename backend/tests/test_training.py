@@ -48,7 +48,7 @@ def workout(db, owner: int, day: date, exercises: list[tuple[int, list[tuple[int
 
 
 def test_training_routes_need_a_token(client):
-    for path in ["/api/v1/me/home", "/api/v1/me/summary"]:
+    for path in ["/api/v1/me/home", "/api/v1/me/summary", "/api/v1/me/workouts/1"]:
         assert client.get(path).status_code == 401
 
 
@@ -141,3 +141,29 @@ def test_resolve_range_rules():
     with pytest.raises(InvalidRange):
         resolve_range("custom", friday, date(2025, 1, 1), friday)
 
+
+def test_a_workout_shows_its_exercises_and_sets(client, db):
+    me = user_id(client, db)
+    bench = exercise(db, me, "Bench", ["chest"])
+    workout_id = workout(db, me, MONDAY, [(bench, [(10, 50), (8, 52.5)])])
+
+    body = client.get(f"/api/v1/me/workouts/{workout_id}", headers=HEADERS).json()
+
+    assert body["workout_date"] == MONDAY.isoformat()
+    assert body["exercises"] == [
+        {
+            "exercise_id": bench,
+            "name": "Bench",
+            "sets": [{"reps": 10, "weight_kg": 50, "rpe": None}, {"reps": 8, "weight_kg": 52.5, "rpe": None}],
+        }
+    ]
+
+
+def test_another_members_workout_is_not_found(client, db):
+    me = user_id(client, db)
+    bench = exercise(db, me, "Bench", ["chest"])
+    workout_id = workout(db, me, MONDAY, [(bench, [(10, 50)])])
+    someone_else = {"Authorization": f"Bearer {make_token(sub='user_jan')}"}
+
+    assert client.get(f"/api/v1/me/workouts/{workout_id}", headers=someone_else).status_code == 404
+    assert client.get("/api/v1/me/home", headers=someone_else).json()["last_workout"] is None
