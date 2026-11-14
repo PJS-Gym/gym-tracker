@@ -1,0 +1,7 @@
+:root{
+--space-0:0;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;
+--gutter-screen:20px;--tabbar-height:84px;--topbar-height:52px;--tap-min:44px;--tap-logger:48px;
+--radius-xs:6px;--radius-sm:10px;--radius-md:14px;--radius-lg:20px;--radius-xl:28px;--radius-2xl:36px;--radius-pill:999px;
+/* Stacking */
+--z-sticky:10;/* @kind other */--z-dock:30;/* @kind other */--z-sheet:50;/* @kind other */--z-toast:70;/* @kind other */
+}

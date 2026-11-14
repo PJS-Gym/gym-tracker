@@ -1,5 +1,5 @@
 /**
- * The PJS GYM name in Archivo Expanded Black. One colour by default.
+ * The Gym Tracker name in Archivo Expanded Black. One colour by default.
  */
 export interface WordmarkProps extends React.HTMLAttributes<HTMLElement> {
   /** s 22, m 40, l 96, or a px number. */

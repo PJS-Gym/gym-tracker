@@ -1,4 +1,4 @@
-The only logo: "PJS GYM" set in Archivo Expanded Black, one colour (currentColor). It is the only uppercase in the system (styled with text-transform; the text reads "PJS Gym").
+The only logo: "GYM TRACKER" set in Archivo Expanded Black, one colour (currentColor). It is the only uppercase in the system (styled with text-transform; the text reads "Gym Tracker").
 ```jsx
 <Wordmark size="s" as="p"/>
 <Wordmark size="m" lockup/>  {/* dark or media only */}

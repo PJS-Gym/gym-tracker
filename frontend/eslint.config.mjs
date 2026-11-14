@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Copied from /design-system by `bun run sync:ds`. Fix issues there, not here.
+    "src/design-system/**",
   ]),
 ]);
 

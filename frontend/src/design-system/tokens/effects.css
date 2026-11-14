@@ -1,0 +1,14 @@
+:root{
+--shadow-none:none;
+/* Light theme: plum-tinted, soft. Only floating things get a shadow (sheets, toasts, docked bars, floating CTA). */
+--shadow-float:0 8px 24px rgba(43,27,33,.16),0 1px 3px rgba(43,27,33,.08);
+--shadow-sheet:0 -6px 24px rgba(43,27,33,.12);
+--scrim-bottom:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 40%,rgba(0,0,0,0) 100%);/* @kind other */
+--scrim-top:linear-gradient(to bottom,rgba(0,0,0,.6) 0,rgba(0,0,0,.55) 110px,rgba(0,0,0,0) 100%);/* @kind other */
+--ease-standard:cubic-bezier(.2,0,0,1);/* @kind other */--ease-emphasized:cubic-bezier(.05,.7,.1,1);/* @kind other */
+--dur-fast:120ms;/* @kind other */--dur-base:200ms;/* @kind other */--dur-slow:320ms;/* @kind other */
+--press-scale:.98;/* @kind other */--press-scale-icon:.96;/* @kind other */
+}
+[data-theme="dark"]{
+--shadow-float:0 10px 30px rgba(0,0,0,.45);--shadow-sheet:0 -8px 40px rgba(0,0,0,.5);
+}
