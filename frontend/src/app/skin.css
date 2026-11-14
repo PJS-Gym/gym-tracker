@@ -1,0 +1,216 @@
+/* The signed-in app's skin, on top of the synced design system (src/design-system is never edited by
+   hand). A warm textured canvas, white cards that lift off it, softer and roomier inputs, and the
+   same in the dark theme. Loaded after the design system and outside its layer, so it wins. */
+
+:root {
+  /* Canvas: a hair warmer than the cards, so a card reads as an object without a heavy border. */
+  --canvas: #fbf6f7;
+  --canvas-glow-1: rgba(255, 79, 160, 0.1);
+  --canvas-glow-2: rgba(230, 188, 198, 0.42);
+  --grain-opacity: 0.05;
+
+  --card-edge: rgba(122, 39, 66, 0.08);
+  --card-shadow: 0 1px 2px rgba(43, 27, 33, 0.04), 0 10px 30px -14px rgba(43, 27, 33, 0.16);
+  --card-shadow-hover: 0 2px 4px rgba(43, 27, 33, 0.05), 0 18px 40px -16px rgba(43, 27, 33, 0.24);
+
+  /* Fields: white on the canvas, a quiet edge that firms up on hover and turns rose with a halo on focus. */
+  --field-fill: #ffffff;
+  --field-edge: rgba(94, 67, 76, 0.42);
+  --field-edge-hover: var(--ink-500);
+  --field-halo: rgba(197, 106, 133, 0.2);
+
+  --chrome: rgba(255, 255, 255, 0.78);
+  --chrome-edge: rgba(122, 39, 66, 0.1);
+
+  /* Featured surfaces: plum with a pink bloom. */
+  --hero: radial-gradient(90% 120% at 100% 0%, rgba(255, 79, 160, 0.38) 0%, rgba(255, 79, 160, 0) 55%),
+    radial-gradient(80% 90% at 0% 100%, rgba(197, 106, 133, 0.35) 0%, rgba(197, 106, 133, 0) 60%),
+    linear-gradient(160deg, #3a2730 0%, #2b1b21 45%, #1a0f13 100%);
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .17 0 0 0 0 .1 0 0 0 0 .13 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] {
+  --canvas: #140b0f;
+  --canvas-glow-1: rgba(255, 79, 160, 0.14);
+  --canvas-glow-2: rgba(156, 58, 87, 0.22);
+  --grain-opacity: 0.07;
+
+  --card-edge: rgba(250, 231, 233, 0.07);
+  --card-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 12px 32px -16px rgba(0, 0, 0, 0.7);
+  --card-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 20px 44px -16px rgba(0, 0, 0, 0.8);
+
+  --field-fill: #24161b;
+  --field-edge: rgba(250, 231, 233, 0.2);
+  --field-edge-hover: rgba(250, 231, 233, 0.42);
+  --field-halo: rgba(230, 188, 198, 0.18);
+
+  --chrome: rgba(30, 18, 22, 0.78);
+  --chrome-edge: rgba(250, 231, 233, 0.08);
+}
+
+/* The canvas: warm base, two soft blooms at the top, and a fine grain. Behind everything, fixed. */
+.app-canvas {
+  background-color: var(--canvas);
+  isolation: isolate;
+}
+.app-canvas::before,
+.app-canvas::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.app-canvas::before {
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, var(--canvas-glow-1), transparent 70%),
+    radial-gradient(50rem 28rem at 10% -15%, var(--canvas-glow-2), transparent 70%);
+}
+.app-canvas::after {
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+}
+
+/* Grain on a featured (plum) surface. Put it on a relatively positioned box. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--grain-light);
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* A card on the canvas. `.card-link` adds a small lift on pointer devices. */
+.card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--card-edge);
+  border-radius: 24px;
+  box-shadow: var(--card-shadow);
+}
+.card-link {
+  transition:
+    translate 220ms var(--ease-emphasized),
+    box-shadow 220ms var(--ease-standard),
+    background-color var(--dur-base) var(--ease-standard);
+}
+@media (hover: hover) and (pointer: fine) {
+  .card-link:hover {
+    translate: 0 -2px;
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+
+/* Floating chrome: the phone's tab bar and the desktop page header when it sticks. */
+.chrome {
+  background-color: var(--chrome);
+  border: 1px solid var(--chrome-edge);
+  -webkit-backdrop-filter: saturate(1.6) blur(18px);
+  backdrop-filter: saturate(1.6) blur(18px);
+}
+
+/* A deeper screen's sticky header: frosted canvas that fades out at its foot, so the glow and grain
+   still show through and scrolled content slips under it without a hard edge. */
+.detail-bar {
+  background-color: color-mix(in srgb, var(--canvas) 72%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent);
+}
+
+/* ===== Inputs ===== */
+/* The design system's field sets its size inline; these win on purpose. */
+/* Single-line fields only: the logger's note is a textarea that keeps its own height. */
+span.pjs-field__box {
+  height: 56px !important;
+  padding: 0 18px !important;
+}
+.pjs-field__box {
+  border-radius: 16px !important;
+  border: 1px solid var(--field-edge) !important;
+  background-color: var(--field-fill) !important;
+  box-shadow: 0 1px 2px rgba(43, 27, 33, 0.04);
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+@media (hover: hover) and (pointer: fine) {
+  .pjs-field__box:hover {
+    border-color: var(--field-edge-hover) !important;
+  }
+}
+.pjs-field__box:focus-within {
+  border-color: var(--focus) !important;
+  box-shadow: 0 0 0 4px var(--field-halo);
+}
+.pjs-field__box:has(input[aria-invalid="true"]) {
+  border-color: var(--status-danger) !important;
+  box-shadow: 0 0 0 4px var(--pjs-flare-soft);
+}
+.pjs-field__box > svg {
+  color: var(--text-3) !important;
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+.pjs-field__box:focus-within > svg {
+  color: var(--text-accent) !important;
+}
+.pjs-field__box input {
+  font-weight: 500;
+}
+.pjs-field__box input:-webkit-autofill,
+.pjs-field__box input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--field-fill) inset;
+}
+/* Native search clear button and date icon follow the theme. */
+.pjs-field__box input[type="search"]::-webkit-search-cancel-button {
+  filter: grayscale(1) opacity(0.6);
+}
+
+/* Logger cells: same edge, same halo. */
+.pjs-cell {
+  border-width: 1px !important;
+  border-color: var(--field-edge) !important;
+  background-color: var(--field-fill) !important;
+  border-radius: 12px !important;
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+.pjs-cell:focus,
+.pjs-cell:focus-visible {
+  border-color: var(--focus) !important;
+  box-shadow: 0 0 0 4px var(--field-halo);
+}
+
+/* Segmented controls sit in a soft well with a raised thumb, not a black pill. */
+.pjs-seg {
+  background: var(--surface-raised) !important;
+  box-shadow: inset 0 1px 2px rgba(43, 27, 33, 0.06);
+}
+.pjs-seg label:has(input:checked) {
+  background: var(--surface-card) !important;
+  color: var(--text-1) !important;
+  box-shadow: 0 1px 2px rgba(43, 27, 33, 0.08), 0 4px 12px -4px rgba(43, 27, 33, 0.18);
+}
+[data-theme="dark"] .pjs-seg label:has(input:checked) {
+  background: var(--surface-field) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-link {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .app-canvas::before,
+  .app-canvas::after,
+  .grain::after {
+    display: none;
+  }
+}
