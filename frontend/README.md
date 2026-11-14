@@ -45,3 +45,15 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+## Video credits
+
+`public/videos/` holds compressed cuts of eight clips from [Mixkit](https://mixkit.co), under the Mixkit Stock Video Free License:
+
+- `welcome-1.mp4`: [Young fitness woman jumping a box in her workout](https://mixkit.co/free-stock-video/young-fitness-woman-jumping-a-box-in-her-workout-40246/)
+- `welcome-2.mp4`: [Strong woman training lifting weights](https://mixkit.co/free-stock-video/strong-woman-training-lifting-weights-44433/)
+- `welcome-3.mp4`: [A young woman performs squats](https://mixkit.co/free-stock-video/a-young-woman-wearing-a-black-sportswear-outfit-performs-squats-52106/)
+- `welcome-4.mp4`: [Man doing push-ups using dumbbells](https://mixkit.co/free-stock-video/man-doing-push-ups-using-dumbbells-40248/)
+- `tutorial-1.mp4`: [Man in a weightlifting session](https://mixkit.co/free-stock-video/man-in-a-weightlifting-session-100545/)
+- `tutorial-2.mp4`: [Man working out on a lat pulldown machine](https://mixkit.co/free-stock-video/man-working-out-on-a-lat-pulldown-machine-100549/)
+- `tutorial-3.mp4`: [People running on treadmills at the gym](https://mixkit.co/free-stock-video/people-running-on-treadmills-at-the-gym-100530/)
+- `tutorial-4.mp4`: [Woman using a gym machine for strength training](https://mixkit.co/free-stock-video/woman-using-a-gym-machine-for-strength-training-100523/)

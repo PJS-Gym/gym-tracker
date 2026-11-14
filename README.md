@@ -144,6 +144,36 @@ uv run python -m app.seed.demo
 
 The project's settings (region, Postgres version, compute, retention) are managed with Terraform in `infra/neon/`. See its README.
 
+## Authentication
+
+Users sign up and sign in with email or Google through [Clerk](https://clerk.com). The screens are our own (`frontend/src/features/auth`), built on Clerk's hooks and the design system; Clerk's prebuilt components are not used. The frontend's `src/proxy.ts` sends guests to `/sign-in` and back to where they were; `/sign-in`, `/sign-up`, onboarding (`/onboarding`) and public reports (`/r/<id>`) stay open.
+
+A new member fills in onboarding first and creates the account after it. A first visit to `/`, and "Zarejestruj się" on the sign-in page, open `/onboarding`: a welcome screen, one question per step, a short tutorial, then `/sign-up`. Guests who open any other address still go to `/sign-in`. The answers wait in the browser until Clerk opens `/onboarding/zapisz`, which saves them to the new account (`POST /api/v1/me/onboarding`). A signed-in member who has not onboarded is sent to `/onboarding` from every screen, so onboarding shows once, even when everything was skipped. The backend checks the Clerk session token on every route in `protected_router` (`backend/app/api/main.py`), answers 401 without a valid one, and creates the user's row on their first request.
+
+Frontend, in `frontend/.env.local` (see `frontend/.env.example`):
+
+| Variable | Value |
+|---|---|
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` | Clerk dashboard → Configure → API keys |
+| `API_URL` | Backend URL, e.g. `http://localhost:8000` |
+
+Backend, in the root `.env.local` next to `DATABASE_URL`:
+
+| Variable | Value |
+|---|---|
+| `CLERK_JWT_KEY` | PEM public key (Clerk dashboard → API keys → JWT public key), or set `CLERK_JWKS_URL` instead |
+| `CLERK_AUTHORIZED_PARTIES` | Frontend origins as JSON, e.g. `["http://localhost:3000"]` |
+| `CLERK_SECRET_KEY` | Reads a new user's email. Optional if the session token is customized with `{"email": "{{user.primary_email_address}}"}` |
+
+Set the same variables in Vercel for production and previews.
+
+## Tests
+
+```bash
+cd backend
+TEST_DATABASE_URL=postgresql://localhost/gym_test uv run pytest   # DB tests are skipped without it
+```
+
 ## CI
 
 On every pull request and push to `main`:
