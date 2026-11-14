@@ -55,6 +55,7 @@ class Exercise:
     name_pl: str | None
     equipment: str | None
     equipment_pl: str | None
+    category: str
     # Muscle group key -> "primary" or "secondary".
     muscles: dict[str, str]
 
@@ -82,6 +83,7 @@ def parse_exercise(
         names_pl.get(raw["id"]),
         equipment,
         equipment_pl.get(equipment),
+        raw["category"],
         muscles,
     )
 
@@ -104,20 +106,22 @@ def save_exercises(conn: psycopg.Connection, exercises: list[Exercise]) -> None:
         # DO UPDATE leaves deleted_at alone.
         saved = conn.execute(
             """
-            INSERT INTO exercises (name, name_pl, equipment, equipment_pl, source, source_id)
-            SELECT name, name_pl, equipment, equipment_pl, %(source)s::text, source_id
+            INSERT INTO exercises (name, name_pl, equipment, equipment_pl, category, source, source_id)
+            SELECT name, name_pl, equipment, equipment_pl, category, %(source)s::text, source_id
             FROM unnest(
                 %(names)s::text[],
                 %(names_pl)s::text[],
                 %(equipment)s::text[],
                 %(equipment_pl)s::text[],
+                %(categories)s::text[],
                 %(source_ids)s::text[]
-            ) AS t(name, name_pl, equipment, equipment_pl, source_id)
+            ) AS t(name, name_pl, equipment, equipment_pl, category, source_id)
             ON CONFLICT (source, source_id) DO UPDATE SET
                 name = EXCLUDED.name,
                 name_pl = EXCLUDED.name_pl,
                 equipment = EXCLUDED.equipment,
-                equipment_pl = EXCLUDED.equipment_pl
+                equipment_pl = EXCLUDED.equipment_pl,
+                category = EXCLUDED.category
             RETURNING source_id, id
             """,
             {
@@ -126,6 +130,7 @@ def save_exercises(conn: psycopg.Connection, exercises: list[Exercise]) -> None:
                 "names_pl": [e.name_pl for e in exercises],
                 "equipment": [e.equipment for e in exercises],
                 "equipment_pl": [e.equipment_pl for e in exercises],
+                "categories": [e.category for e in exercises],
                 "source_ids": [e.source_id for e in exercises],
             },
         ).fetchall()
