@@ -1,26 +1,267 @@
 @import "tailwindcss";
+/* Design system tokens, Archivo, focus ring and interaction states. In the base layer: it wins over
+   Tailwind's preflight, and Tailwind utilities still win over its element rules (like `a { color }`). */
+@import "../design-system/styles.css" layer(base);
+/* The signed-in app's canvas, cards, inputs and both themes, over the design system. */
+@import "./skin.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* `dark:` follows the theme switch (data-theme on <html>), not only the system setting. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+/* Design tokens as Tailwind utilities (text-fg-2, bg-surface-raised, text-title-l…).
+   Names differ from the token names so a theme value never points at itself. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+
+  --color-surface-app: var(--surface-app);
+  --color-surface-card: var(--surface-card);
+  --color-surface-raised: var(--surface-raised);
+  --color-fg: var(--text-1);
+  --color-fg-2: var(--text-2);
+  --color-fg-3: var(--text-3);
+  --color-fg-accent: var(--text-accent);
+  --color-fg-danger: var(--status-danger);
+  --color-line: var(--border-subtle);
+  --color-accent-fill: var(--accent);
+  --color-on-accent: var(--text-on-accent);
+
+  --text-display-l: var(--fs-display-l);
+  --text-display-l--line-height: var(--lh-display-l);
+  --text-display-m: var(--fs-display-m);
+  --text-display-m--line-height: var(--lh-display-m);
+  --text-title-l: var(--fs-title-l);
+  --text-title-l--line-height: var(--lh-title-l);
+  --text-title-m: var(--fs-title-m);
+  --text-title-m--line-height: var(--lh-title-m);
+  --text-title-s: var(--fs-title-s);
+  --text-title-s--line-height: var(--lh-title-s);
+  --text-body: var(--fs-body);
+  --text-body--line-height: var(--lh-body);
+  --text-body-s: var(--fs-body-s);
+  --text-body-s--line-height: var(--lh-body-s);
+  --text-label: var(--fs-label);
+  --text-label--line-height: var(--lh-label);
+  --text-caption: var(--fs-caption);
+  --text-caption--line-height: var(--lh-caption);
+
+  --spacing-gutter: var(--gutter-screen);
+  --spacing-tap: var(--tap-min);
+  --radius-card: 20px;
+  --radius-sheet: 28px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* View transitions. Motion only confirms a change: no bounce, and the design system's own timing
+   (leave in --dur-base, arrive in --dur-slow on the emphasized curve). */
+@keyframes pjs-leave {
+  to {
+    opacity: 0;
+    translate: var(--pjs-shift, 0) var(--pjs-rise, 0);
+  }
+}
+@keyframes pjs-arrive {
+  from {
+    opacity: 0;
+    translate: var(--pjs-shift, 0) var(--pjs-rise, 0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Onboarding steps: forward moves left, back moves right. */
+::view-transition-old(.step-forward),
+::view-transition-old(.step-back) {
+  animation: pjs-leave var(--dur-base) var(--ease-standard) both;
+}
+::view-transition-new(.step-forward),
+::view-transition-new(.step-back) {
+  animation: pjs-arrive var(--dur-slow) var(--ease-emphasized) both;
+}
+::view-transition-old(.step-forward),
+::view-transition-new(.step-back) {
+  --pjs-shift: -32px;
+}
+::view-transition-new(.step-forward),
+::view-transition-old(.step-back) {
+  --pjs-shift: 32px;
+}
+
+/* App screens. Mobile first: the tab bar and the side menu never move, only the screen does.
+   Switching between peers fades through with a small lift; the old screen is gone before the new
+   one settles, so two screens never overlap for long. */
+::view-transition-old(.screen) {
+  animation: pjs-leave 160ms var(--ease-standard) both;
+}
+::view-transition-new(.screen) {
+  --pjs-rise: 10px;
+  animation: pjs-arrive 300ms var(--ease-emphasized) 60ms both;
+}
+
+/* Going deeper (Start to a workout) slides in from the right; coming back slides the other way. */
+::view-transition-old(.nav-forward),
+::view-transition-old(.nav-back) {
+  animation: pjs-leave 200ms var(--ease-standard) both;
+}
+::view-transition-new(.nav-forward),
+::view-transition-new(.nav-back) {
+  animation: pjs-arrive 340ms var(--ease-emphasized) both;
+}
+::view-transition-old(.nav-forward),
+::view-transition-new(.nav-back) {
+  --pjs-shift: -24px;
+}
+::view-transition-new(.nav-forward),
+::view-transition-old(.nav-back) {
+  --pjs-shift: 24px;
+}
+
+/* The tab bar holds still above whatever moves. */
+::view-transition-group(app-tabbar),
+::view-transition-old(app-tabbar),
+::view-transition-new(app-tabbar) {
+  animation: none;
+}
+
+/* The pink indicator of the active tab glides to the new tab instead of blinking across. */
+[data-tabbar] [aria-current="page"] > span {
+  view-transition-name: tab-indicator;
+}
+::view-transition-group(tab-indicator),
+::view-transition-group(nav-indicator) {
+  animation-duration: 340ms;
+  animation-timing-function: var(--ease-emphasized);
+}
+
+/* Data that arrives after the screen: the placeholder fades, the content rises into place. */
+::view-transition-old(.placeholder) {
+  animation: pjs-leave 150ms var(--ease-standard) both;
+}
+::view-transition-new(.reveal) {
+  --pjs-rise: 12px;
+  animation: pjs-arrive 380ms var(--ease-emphasized) both;
+}
+
+/* Rows that change place (Podsumowanie re-sorting) glide there, already showing their new values:
+   crossfading old and new text inside 17 moving rows reads as noise. */
+::view-transition-group(.reorder) {
+  animation-duration: 420ms;
+  animation-timing-function: var(--ease-emphasized);
+}
+::view-transition-old(.reorder) {
+  animation: none;
+  opacity: 0;
+}
+::view-transition-new(.reorder) {
+  animation: none;
+}
+
+/* A bar drawing out from its baseline when the numbers first appear. */
+@keyframes pjs-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+.bar-grow {
+  transform-origin: left center;
+  animation: pjs-grow 560ms var(--ease-emphasized) backwards;
+  transition: width 420ms var(--ease-emphasized), background-color var(--dur-base) var(--ease-standard);
+}
+
+/* A day marked as trained in the week strip. */
+@keyframes pjs-pop {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+}
+.pop-in {
+  animation: pjs-pop 320ms var(--ease-emphasized) backwards;
+}
+
+/* The e1RM line drawing itself from the first workout to the latest, then its points and labels. */
+@keyframes pjs-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+.line-draw {
+  stroke-dasharray: 1;
+  animation: pjs-draw 900ms var(--ease-emphasized) 120ms backwards;
+}
+@keyframes pjs-fade {
+  from {
+    opacity: 0;
+  }
+}
+.chart-fade {
+  animation: pjs-fade 400ms var(--ease-standard) 700ms backwards;
+}
+
+/* A new set or exercise in the logger settles in from just above. */
+.row-in {
+  --pjs-rise: -6px;
+  animation: pjs-arrive 260ms var(--ease-emphasized) backwards;
+}
+
+/* Loading placeholders breathe very slowly, so a wait reads as work rather than a freeze. */
+@keyframes pjs-breathe {
+  50% {
+    opacity: 0.55;
+  }
+}
+.placeholder-block {
+  border-radius: 14px;
+  background: var(--surface-raised);
+  animation: pjs-breathe 1.6s var(--ease-standard) infinite;
+}
+
+/* Between the video screens and the form: the biggest change in the flow, so it takes its time.
+   The video dissolves slowly, the old text leaves first, and the new text arrives once there is
+   room for it. */
+::view-transition-old(.media),
+::view-transition-new(.media) {
+  animation-duration: 900ms;
+  animation-timing-function: var(--ease-standard);
+  animation-fill-mode: both;
+}
+::view-transition-old(.media) {
+  animation-name: pjs-leave;
+}
+::view-transition-new(.media) {
+  animation-name: pjs-arrive;
+}
+::view-transition-old(.step-cross) {
+  animation: pjs-leave 450ms var(--ease-standard) both;
+}
+::view-transition-new(.step-cross) {
+  --pjs-rise: 16px;
+  animation: pjs-arrive 650ms var(--ease-emphasized) 350ms both;
+}
+html:active-view-transition-type(cross-media)::view-transition-old(root),
+html:active-view-transition-type(cross-media)::view-transition-new(root) {
+  animation-duration: 900ms;
+  animation-timing-function: var(--ease-standard);
+}
+
+/* A new screen inside the sign-in and sign-up forms. */
+.step-in {
+  --pjs-shift: 32px;
+  /* Backwards only: a fill that outlives the motion would trap the fixed toasts inside this box. */
+  animation: pjs-arrive var(--dur-slow) var(--ease-emphasized) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step-in,
+  .bar-grow,
+  .pop-in,
+  .line-draw,
+  .chart-fade,
+  .row-in,
+  .placeholder-block {
+    animation: none;
+    transition: none;
+  }
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }

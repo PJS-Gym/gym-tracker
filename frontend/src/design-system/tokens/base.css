@@ -1,0 +1,12 @@
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+:root{color-scheme:light}
+[data-theme="dark"]{color-scheme:dark}
+body{background:var(--surface-app);color:var(--text-1);font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-body);-webkit-font-smoothing:antialiased;text-size-adjust:100%}
+a{color:var(--text-accent);text-decoration:none}a:hover{text-decoration:underline}
+.pjs-display{font-family:var(--font-display);font-stretch:var(--stretch-display);font-weight:var(--weight-heavy);letter-spacing:var(--tracking-display);line-height:var(--lh-display-l)}
+.pjs-label{font-size:var(--fs-label);font-weight:var(--weight-semibold)}
+.pjs-num{font-variant-numeric:tabular-nums}
+/* One focus style for everything. Inline styles cannot express :focus-visible, so it lives here. */
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important}}
