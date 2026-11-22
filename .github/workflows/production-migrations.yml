@@ -14,7 +14,6 @@ jobs:
       github.event.client_payload.project.name == 'gym-tracker-api' &&
       github.event.client_payload.git.ref == 'main'
     runs-on: ubuntu-latest
-    environment: production-migrations
     concurrency:
       group: production-migrations
       cancel-in-progress: false
@@ -41,5 +40,5 @@ jobs:
         env:
           DATABASE_URL_UNPOOLED: ${{ secrets.DATABASE_URL_UNPOOLED }}
         run: |
-          : "${DATABASE_URL_UNPOOLED:?Set the DATABASE_URL_UNPOOLED environment secret}"
+          : "${DATABASE_URL_UNPOOLED:?Set the DATABASE_URL_UNPOOLED repository secret}"
           uv run --locked alembic upgrade head
