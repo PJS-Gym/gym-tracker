@@ -1,0 +1,45 @@
+name: Production migrations
+
+on:
+  repository_dispatch:
+    types: [vercel.deployment.success]
+
+permissions:
+  contents: read
+
+jobs:
+  migrate:
+    if: >-
+      github.event.client_payload.environment == 'production' &&
+      github.event.client_payload.project.name == 'gym-tracker-api' &&
+      github.event.client_payload.git.ref == 'main'
+    runs-on: ubuntu-latest
+    environment: production-migrations
+    concurrency:
+      group: production-migrations
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/heads/main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check out the deployed commit from main
+        env:
+          DEPLOYED_SHA: ${{ github.event.client_payload.git.sha }}
+        run: |
+          if [[ ! "$DEPLOYED_SHA" =~ ^[0-9a-f]{40}$ ]] || ! git merge-base --is-ancestor "$DEPLOYED_SHA" HEAD; then
+            echo '::error::Vercel deployment must reference a commit on main.'
+            exit 1
+          fi
+          git checkout --detach "$DEPLOYED_SHA"
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.7"
+      - name: Apply migrations to production Neon
+        working-directory: backend
+        env:
+          DATABASE_URL_UNPOOLED: ${{ secrets.DATABASE_URL_UNPOOLED }}
+        run: |
+          : "${DATABASE_URL_UNPOOLED:?Set the DATABASE_URL_UNPOOLED environment secret}"
+          uv run --locked alembic upgrade head
