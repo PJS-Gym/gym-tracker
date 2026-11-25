@@ -11,6 +11,7 @@
     uv
     git
     gh
+    gnumake
     postgresql
   ];
 
