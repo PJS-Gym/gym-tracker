@@ -140,11 +140,5 @@ For production or a PR database, explicitly select the target branch:
 DATABASE_URL_UNPOOLED='<target branch direct connection string>' make migrate
 ```
 
-### Production migrations
-
-After Vercel successfully deploys `gym-tracker-api` from `main` to Production, the [Production migrations workflow](.github/workflows/production-migrations.yml) runs `alembic upgrade head` from the deployed commit.
-
-The project's settings (region, Postgres version, compute, retention) are managed with Terraform in `infra/neon/`. See its README.
-
 Create new migrations in `backend/` with `uv run alembic revision -m "description"`, then fill in `upgrade()` and `downgrade()`.
 
