@@ -1,0 +1,69 @@
+version: "3"
+
+output: prefixed
+
+tasks:
+  local:start-app:
+    desc: Start APP (database, backend and frontend)
+    cmds:
+      - task: db:up
+      - task: frontend:install
+      - task: run-servers
+
+  local:stop:
+    desc: Stop the local database
+    cmds:
+      - task: db:down
+
+  local:test:
+    desc: Run lint, type check and tests for backend and frontend
+    cmds:
+      - task: backend:test
+      - task: frontend:test
+
+  run-servers:
+    internal: true
+    deps: [backend:dev, frontend:dev]
+
+  db:up:
+    desc: Start Postgres in Docker and apply migrations
+    cmds:
+      - make db-up
+
+  db:down:
+    desc: Stop Postgres
+    cmds:
+      - make db-down
+
+  backend:dev:
+    desc: Run the FastAPI backend on http://127.0.0.1:8000
+    cmds:
+      - make backend-local
+
+  backend:test:
+    desc: Backend lint and unit tests
+    dir: backend
+    cmds:
+      - uv run ruff check app tests
+      - uv run ruff format --check app tests
+      - uv run pytest tests/unit -q
+
+  frontend:install:
+    internal: true
+    dir: frontend
+    cmds:
+      - bun install --frozen-lockfile
+
+  frontend:dev:
+    desc: Run the Next.js frontend on http://localhost:3000
+    dir: frontend
+    cmds:
+      - bun dev
+
+  frontend:test:
+    desc: Frontend lint, type check and tests
+    dir: frontend
+    cmds:
+      - bun run lint
+      - bun run typecheck
+      - bun run test

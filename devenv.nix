@@ -12,6 +12,7 @@
     git
     gh
     gnumake
+    go-task
     postgresql
   ];
 
