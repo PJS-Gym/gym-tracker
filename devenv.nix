@@ -13,7 +13,6 @@
     gh
     gnumake
     postgresql
-    terraform
   ];
 
   enterShell = ''

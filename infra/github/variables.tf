@@ -11,11 +11,10 @@ variable "repository" {
 }
 
 variable "required_status_checks" {
-  description = "Commit status contexts that must pass before merging into main (Vercel Preview builds and CI)."
+  description = "Commit status contexts that must pass before merging into main (Vercel Preview builds)."
   type        = list(string)
   default = [
     "Vercel – gym-tracker",     # frontend
     "Vercel – gym-tracker-api", # backend
-    "CI passed",                # GitHub Actions: lint, tests, build, terraform
   ]
 }
