@@ -21,7 +21,7 @@ bun tf apply
 - Squash and Merge is the only merge method
 - Head branches are deleted after merge
 - "Update branch" is enabled (merge and rebase variants)
-- Merge is blocked until Vercel Preview builds pass: `Vercel – gym-tracker` (frontend) and `Vercel – gym-tracker-api` (backend)
+- Merge is blocked until Vercel Preview builds pass (`Vercel – gym-tracker`, `Vercel – gym-tracker-api`) and the `CI passed` check from `.github/workflows/ci.yml` is green
 
 ## State
 
