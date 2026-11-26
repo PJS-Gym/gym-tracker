@@ -50,9 +50,10 @@ resource "github_repository_ruleset" "main" {
       allowed_merge_methods           = ["squash"]
     }
 
-    # Vercel Preview builds must succeed before merge.
+    # Vercel Preview builds and CI must succeed before merge, on a branch that
+    # is up to date with main (otherwise merge is blocked until "Update branch").
     required_status_checks {
-      strict_required_status_checks_policy = false
+      strict_required_status_checks_policy = true
 
       dynamic "required_check" {
         for_each = var.required_status_checks
